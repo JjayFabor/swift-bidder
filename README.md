@@ -19,13 +19,13 @@ This is a **Real-Time Auction System** built using **Laravel 11.x**, **InertiaJS
 ---
 
 ## 📸 Features
-✅ User Authentication (Register, Login, Logout)
-✅ Create and Manage Auctions
-✅ Real-Time Bidding with WebSockets
-✅ Auction Status Tracking (Active, Pending, Closed, Cancelled)
-✅ Upload Multiple Images and a Video for Each Auction
-✅ Role-Based Access (Admin/User)
-✅ Responsive UI with Tailwind CSS and shadcn/ui
+- ✅ User Authentication (Register, Login, Logout)
+- ✅ Create and Manage Auctions
+- ✅ Real-Time Bidding with WebSockets
+- ✅ Auction Status Tracking (Active, Pending, Closed, Cancelled)
+- ✅ Upload Multiple Images and a Video for Each Auction
+- ✅ Role-Based Access (Admin/User)
+- ✅ Responsive UI with Tailwind CSS and shadcn/ui
 
 ---
 
