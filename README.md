@@ -93,8 +93,8 @@ DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=auction_db
-DB_USERNAME=sail
-DB_PASSWORD=password
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
 ### ✅ Run Docker with Sail
@@ -114,6 +114,59 @@ DB_PASSWORD=password
 ```bash
 npm run dev
 ```
+
+</details>
+
+<details>
+<summary><b>📧 Mail Configuration (Gmail)</b></summary>
+
+To enable email notifications through Gmail, configure the mail settings in your .env file as shown below:
+
+## ✅ .env Configuration
+
+Add the following to your .env file:
+
+```bash
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD="your-app-password"
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your-email@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+## ✅ Setting Up Gmail Account for SMTP
+
+1. **Enable 2-Step Verification** on your Google account.
+2. Create an **App Password**:
+
+    * Go to **Google Account Settings** → **Security** → **App Passwords**.
+    * Select **Mail** → **Other** → Type "Laravel App."
+    * Copy the generated password and use it as `MAIL_PASSWORD` in the `.env` file.
+
+## ✅ Test Email Configuration
+
+You can test your email configuration using the following Artisan command:
+
+```bash
+php artisan tinker
+```
+
+In Tinker, send a test email:
+
+```php
+Mail::raw('Test email from Laravel', function ($message) {
+    $message->to('recipient@example.com')
+            ->subject('Test Email');
+});
+```
+
+If the configuration is correct, the email will be sent successfully.
+
+### 🎯 Helpful Resource:
+👉 [How to Set Up Gmail SMTP in Laravel](https://mailtrap.io/blog/laravel-send-email-gmail/#Setting-up-Laravel-email-service-before-sending-emails)
 
 </details>
 
