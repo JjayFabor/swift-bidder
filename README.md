@@ -24,6 +24,7 @@ The project is containerized using **Laravel Sail** on **WSL2** (Windows Subsyst
 ---
 
 ## 📸 Features
+
 - ✅ User Authentication (Register, Login, Logout)
 - ✅ Create and Manage Auctions
 - ✅ Real-Time Bidding with WebSockets
