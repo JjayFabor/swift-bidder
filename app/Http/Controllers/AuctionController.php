@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\AuctionImage;
 use Illuminate\Http\Request;
 use App\Rules\ValidAuctionTimes;
 use App\Services\AuctionService;
@@ -58,7 +60,24 @@ class AuctionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $auction = $this->auctionService->getAuctionById($id);
+        $auction_images = AuctionImage::where('auction_id', $id)->get();
+
+        // Prepend full storage URL to images
+        $auction_images->transform(function ($image) {
+            $image->image_path = asset('storage/' . $image->image_path);
+            return $image;
+        });
+
+        // Prepend full storage URL to video
+        if ($auction->video_path) {
+            $auction->video_path = asset('storage/' . $auction->video_path);
+        }
+
+        return Inertia::render('Admin/Auctions/ShowAuction', [
+            'auction' => $auction,
+            'images' => $auction_images,
+        ]);
     }
 
     /**
