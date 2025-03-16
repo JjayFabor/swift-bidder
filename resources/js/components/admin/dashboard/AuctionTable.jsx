@@ -2,7 +2,7 @@ import { usePage, router } from '@inertiajs/react';
 import { Button } from "@/components/ui/button";
 import moment from "moment";
 import { toast } from 'sonner';
-import { ExternalLink, Trash } from "lucide-react";
+import { ExternalLink, Trash, Pencil } from "lucide-react";
 import { useEffect, useState } from 'react';
 import {
     Table,
@@ -19,6 +19,18 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
 
     const [deleteAuctionId, setDeleteAuctionId] = useState(null);
 
+    // Show Auction
+    const showAuction = (auctionId) => {
+        router.get(route('admin.auction.show', auctionId), {
+            onSuccess: () => {
+                toast.success("Auction details retrieved successfully");
+            },
+            onError: (errors) => {
+                toast.error("Error fetching auction details");
+            }
+        });
+    }
+
     // Delete Auction
     const handleDelete = () => {
         if (!deleteAuctionId) return;
@@ -34,6 +46,7 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
 
         setDeleteAuctionId(null);
     };
+
 
     const truncateText = (text, maxLength=20) => {
         if (!text) return '';
@@ -130,13 +143,22 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                             </TableCell>
                             <TableCell className="text-center">
                                 <Button
-                                    onClick={() => console.log(auction.id)}
+                                    onClick={() => showAuction(auction.id)}
                                     size="sm"
                                     variant="ghost"
                                     className="group hover:bg-blue-900 hover:text-blue-300"
                                 >
                                     <ExternalLink className="h-4 w-4 mr-1 text-blue-500 group-hover:text-white transition-colors" />
                                     View
+                                </Button>
+                                <Button
+                                    onClick={() => showAuction(auction.id)}
+                                    size="sm"
+                                    variant="ghost"
+                                    className="group hover:bg-blue-900 hover:text-blue-300"
+                                >
+                                    <Pencil className="h-4 w-4 mr-1 text-blue-500 group-hover:text-white transition-colors" />
+                                    Edit
                                 </Button>
                                 <Button
                                     onClick={() =>
@@ -149,10 +171,17 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                                     <Trash className="h-4 w-4 mr-1 text-red-500 group-hover:text-white transition-colors" />
                                     Delete
                                 </Button>
-                                <DeleteAuctionDialog isOpen={!!deleteAuctionId} onClose={() => setDeleteAuctionId(null)} onConfirm={handleDelete} title={auction.title} />
                             </TableCell>
                         </TableRow>
                     ))}
+                    {deleteAuctionId && (
+                        <DeleteAuctionDialog
+                            isOpen={!!deleteAuctionId}
+                            onClose={() => setDeleteAuctionId(null)}
+                            onConfirm={handleDelete}
+                            title={dataAuctions.find(auction => auction.id === deleteAuctionId)?.title}
+                        />
+                    )}
                 </TableBody>
             </Table>
             <PaginationControls links={links}/>

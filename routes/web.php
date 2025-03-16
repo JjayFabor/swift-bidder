@@ -27,6 +27,7 @@ Route::middleware(['admin', 'auth', 'verified'])->prefix('admin')->group(
         Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
 
         Route::get('/auctions', [AdminController::class, 'auctions'])->name('admin.auctions');
+        Route::get('/auctions/{id}', [AuctionController::class, 'show'])->name('admin.auction.show');
         Route::post('/auctions', [AuctionController::class, 'store'])->name('admin.auction.store');
         Route::delete('/auctions/{id}', [AuctionController::class, 'destroy'])->name('admin.auction.delete');
     }

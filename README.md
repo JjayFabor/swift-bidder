@@ -52,7 +52,6 @@ The project is containerized using **Laravel Sail** on **WSL2** (Windows Subsyst
 
 ## 🛠️ Installation
 
-
 <details>
 <summary><b>🚀 Installation</b></summary>
 
