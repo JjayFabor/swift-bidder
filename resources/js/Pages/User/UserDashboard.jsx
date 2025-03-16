@@ -1,6 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
-import AppLayout from '@/components/layouts/AppLayout';
+import AppLayout from '@/components/Layouts/AppLayout';
 
 export default function UserDashboard() {
     return (

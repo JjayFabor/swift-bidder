@@ -1,9 +1,9 @@
 import { usePage, router } from '@inertiajs/react';
-import AppLayout from '@/components/layouts/AppLayout';
+import AppLayout from '@/components/Layouts/AppLayout';
 import { useEffect, useState } from 'react';
 import { Home, Users, Trophy, Hourglass } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import AddAuctionModal from './Auctions/AddAuctionModal';
+import AddAuctionModal from '../../components/admin/dashboard/AddAuctionModal';
 import StatCard from '@/components/admin/dashboard/StatCard';
 import AuctionTable from '@/components/admin/dashboard/AuctionTable';
 

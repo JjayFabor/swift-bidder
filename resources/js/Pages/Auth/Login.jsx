@@ -3,7 +3,7 @@ import {useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import AuthLayout from "../../components/layouts/AuthLayout";
+import AuthLayout from "../../components/Layouts/AuthLayout";
 import { route } from 'ziggy-js';
 
 export default function Login   ()  {
