@@ -1,5 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/layouts/AppSidebar";
+import { AppSidebar } from "@/components/Layouts/AppSidebar";
 import { Toaster } from "@/components/ui/sonner";
 
 export default function AppLayout({ children }) {

@@ -17,7 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from 'sonner';
 import { CheckCircle, CircleX } from "lucide-react";
 
-const AddAuctionModal = ({ title, isOpen, onClose, auctions}) => {
+export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
 
     const { data, setData, post, processing, reset, errors } = useForm({
         title: '',
@@ -245,5 +245,3 @@ const AddAuctionModal = ({ title, isOpen, onClose, auctions}) => {
         </Dialog>
     );
 };
-
-export default AddAuctionModal;

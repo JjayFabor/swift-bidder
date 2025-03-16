@@ -19,7 +19,7 @@ import {
     Download,
 } from "lucide-react";
 import moment from "moment";
-import AppLayout from "@/components/layouts/AppLayout";
+import AppLayout from "@/components/Layouts/AppLayout";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
