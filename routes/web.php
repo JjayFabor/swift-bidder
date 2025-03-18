@@ -1,12 +1,13 @@
     <?php
 
-use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\VerifyTokenController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -17,9 +18,9 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 /** OTP Route */
-Route::get('/otp/verify', [UserController::class, 'verifyAccount'])->name('verify.account');
-Route::post('/otp/verify', [UserController::class, 'emailActivation'])->name('otp.verify');
-Route::post('/resend-otp', [UserController::class, 'resendOtp'])->name('resend.otp');
+Route::get('/otp/verify', [VerifyTokenController::class, 'verifyAccount'])->name('verify.account');
+Route::post('/otp/verify', [VerifyTokenController::class, 'emailActivation'])->name('otp.verify');
+Route::post('/resend-otp', [VerifyTokenController::class, 'resendOtp'])->name('resend.otp');
 
 /** Admin Route */
 Route::middleware(['admin', 'auth', 'verified'])->prefix('admin')->group(
