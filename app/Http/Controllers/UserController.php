@@ -59,7 +59,7 @@ class UserController extends Controller
                 } else {
                     $auction->selected_image = null;
                 }
-
+                
                 return $auction;
             });
 

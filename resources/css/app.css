@@ -94,9 +94,30 @@
       @apply border-border;
     }
 
+    html, body {
+        height: 100%;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
     /* Dark mode styles */
     .dark body {
         @apply bg-gray-900 text-gray-100;
     }
+
+    .hide-scrollbar {
+       -ms-overflow-style: none;
+       scrollbar-width: none;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+       display: none;
+    }
+
   }
 
