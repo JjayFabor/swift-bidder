@@ -36,7 +36,7 @@ export function AppSidebar() {
     const items = [
         {
         title: "Home",
-        url: route('admin.dashboard'),
+        url: auth.user.role === 'admin' ? route('admin.dashboard') : route('user.dashboard'),
         icon: Home,
         },
     ];
