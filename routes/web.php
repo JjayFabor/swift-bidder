@@ -1,5 +1,7 @@
     <?php
 
+use Inertia\Inertia;
+use App\Events\TestEvent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuctionController;
@@ -40,3 +42,14 @@ Route::middleware(['auth', 'verified'])->group(
         Route::get('/', [UserController::class, 'index'])->name('user.dashboard');
     }
 );
+
+
+/** This is for test pusher */
+Route::get('/test-broadcast', function () {
+    broadcast(new TestEvent("Hello, this is a test message!"));
+    return "TestEvent has been broadcasted!";
+});
+
+Route::get('/test-page', function () {
+    return Inertia::render('TestPage');
+});
