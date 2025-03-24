@@ -3,6 +3,7 @@ import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import axios from 'axios';
+import './echo';
 
 // Axios interceptor to handle session expiration
 axios.interceptors.response.use(
