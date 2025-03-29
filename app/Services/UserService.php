@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
-use App\Mail\SendTokenMail;
 use App\Models\User;
+use App\Mail\SendTokenMail;
 use App\Models\VerifyToken;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
 
 class UserService
 {
@@ -46,5 +48,22 @@ class UserService
         ]);
 
         Mail::to($user->email)->queue(new SendTokenMail($user->email, $validToken, $user->name));
+    }
+
+    public static function getUserCounts(): array
+    {
+        return Cache::remember('user_counts', now()->addMinutes(5), function () {
+            $threshold = now()->subMinutes(5)->timestamp;
+
+            return [
+                'total_bidders' => User::where('role', 'bidder')->count(),
+                'online_users' => DB::table('sessions')
+                    ->join('users', 'sessions.user_id', '=', 'users.id')
+                    ->where('users.role', 'bidder')
+                    ->where('last_activity', '>=', $threshold)
+                    ->distinct()
+                    ->count('user_id')
+            ];
+        });
     }
 }

@@ -5,31 +5,36 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Auction;
+use App\Services\UserService;
 use App\Services\AuctionService;
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
     protected $auctionService;
+    protected $userService;
 
-    public function __construct (AuctionService $auctionService)
+    public function __construct (AuctionService $auctionService, UserService $userService)
     {
         $this->auctionService = $auctionService;
+        $this->userService = $userService;
     }
 
     public function index()
     {
         $auctions = $this->auctionService->getAllAuctions();
-        $counts = Auction::auctionCounts();
+        $auctionCounts = Auction::auctionCounts();
+        $userCounts = $this->userService->getUserCounts();
 
         return Inertia::render('Admin/AdminDashboard',[
             'auctions' => [
                 'dataAuctions' => $auctions->items(),
                 'links' => $auctions->toArray()['links'],
             ],
-            'totalActiveAuctions' => $counts['total_active_auctions'],
-            'totalAuctions' => $counts['total_auctions'],
-            'totalBidders' => User::totalBidders(),
+            'totalActiveAuctions' => $auctionCounts['total_active_auctions'],
+            'totalAuctions' => $auctionCounts['total_auctions'],
+            'totalBidders' => $userCounts['total_bidders'],
+            'onlineBidders' => $userCounts['online_users'],
         ]);
     }
 
