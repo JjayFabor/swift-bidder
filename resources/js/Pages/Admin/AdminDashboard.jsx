@@ -1,6 +1,6 @@
-import { usePage, router } from '@inertiajs/react';
-import AppLayout from '@/components/Layouts/AppLayout';
-import { useEffect, useState } from 'react';
+import { usePage } from '@inertiajs/react';
+import AppLayout from '@/components/layouts/AppLayout';
+import { useState } from 'react';
 import { Home, Users, Trophy, Hourglass } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import AddAuctionModal from '../../components/admin/dashboard/AddAuctionModal';

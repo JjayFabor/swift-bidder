@@ -28,6 +28,7 @@ Route::post('/resend-otp', [VerifyTokenController::class, 'resendOtp'])->name('r
 Route::middleware(['admin', 'auth', 'verified'])->prefix('admin')->group(
     function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/auction-page', [AdminController::class, 'auctionPage'])->name('admin.auction.page');
 
         Route::get('/auctions', [AdminController::class, 'auctions'])->name('admin.auctions');
         Route::get('/auctions/{id}', [AuctionController::class, 'show'])->name('admin.auction.show');

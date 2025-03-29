@@ -1,7 +1,6 @@
-import { Home, Settings, LogOut, ChevronLeft, ChevronRight, User } from "lucide-react";
+import { Home, Settings, LogOut, ChevronRight, User, Gavel } from "lucide-react";
 import { route } from 'ziggy-js';
-import { useForm } from '@inertiajs/react';
-import { usePage } from '@inertiajs/react';
+import { useForm, usePage, Link} from '@inertiajs/react';
 import { useState } from 'react';
 
 import {
@@ -11,9 +10,7 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger
 } from "@/components/ui/sidebar";
 
 import {
@@ -33,21 +30,26 @@ export function AppSidebar() {
         post(route('logout'));
     };
 
-    const items = [
-        {
-        title: "Home",
-        url: auth.user.role === 'admin' ? route('admin.dashboard') : route('user.dashboard'),
-        icon: Home,
-        },
-    ];
-
-    const handleClick = (item) => {
-        if (item.action) {
-            item.action();
-        } else if (item.url) {
-            window.location.href = item.url;
-        }
-    };
+    const items = auth.user.role === 'admin'
+        ? [
+            {
+            title: "Admin Dashboard",
+            url: route('admin.dashboard'),
+            icon: Home,
+            },
+            {
+                title: "Auction Page",
+                url: route('admin.auction.page'),
+                icon: Gavel,
+            }
+        ]
+        : [
+            {
+                title: "User Dashboard",
+                url: route('user.dashboard'),
+                icon: Home,
+            },
+        ];
 
     return (
         <Sidebar className="bg-[#1E2A38] text-white flex h-screen flex-cols">
@@ -60,13 +62,13 @@ export function AppSidebar() {
                         <SidebarMenu>
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton
-                                        onClick={() => handleClick(item)}
-                                        className="hover:bg-[#273747] px-4 py-2 rounded-md"
+                                    <Link
+                                        href={item.url}
+                                        className="w-full flex items-center px-4 py-2 rounded-md hover:bg-[#273747]"
                                     >
                                         <item.icon className="h-5 w-5 mr-3" />
                                         <span>{item.title}</span>
-                                    </SidebarMenuButton>
+                                    </Link>
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
