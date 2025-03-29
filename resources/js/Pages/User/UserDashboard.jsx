@@ -8,7 +8,7 @@ import {
 import AppLayout from "@/components/layouts/AppLayout";
 import { Button } from "@/components/ui/button";
 import StatCard from "@/components/StatCard";
-import AuctionPage from "./AuctionPage.jsx";
+import AuctionPage from "../Auction/AuctionPage.jsx";
 
 export default function UserDashboard({ activeAuctions = [], pendingAuctions = [] }) {
 

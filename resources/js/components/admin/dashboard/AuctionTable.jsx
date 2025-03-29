@@ -21,14 +21,7 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
 
     // Show Auction
     const showAuction = (auctionId) => {
-        router.get(route('admin.auction.show', auctionId), {
-            onSuccess: () => {
-                toast.success("Auction details retrieved successfully");
-            },
-            onError: (errors) => {
-                toast.error("Error fetching auction details");
-            }
-        });
+        router.get(route('auction.show', auctionId));
     }
 
     // Delete Auction
