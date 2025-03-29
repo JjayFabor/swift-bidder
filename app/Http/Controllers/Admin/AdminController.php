@@ -31,4 +31,42 @@ class AdminController extends Controller
             'totalBidders' => User::totalBidders(),
         ]);
     }
+
+    public function auctionPage()
+    {
+        $activeAuctions = Auction::with(['images'])
+            ->where('status', 'active')
+            ->get()
+            ->map(function ($auction) {
+                if ($auction->images->count() === 1) {
+                    $auction->selected_image = $auction->images->first()->image_path;
+                } elseif ($auction->images->count() > 1) {
+                    $auction->selected_image = $auction->images->random()->image_path;
+                } else {
+                    $auction->selected_image = null;
+                }
+
+                return $auction;
+            });
+
+        $pendingAuctions = Auction::with(['images'])
+            ->where('status', 'pending')
+            ->get()
+            ->map(function ($auction) {
+                if ($auction->images->count() === 1) {
+                    $auction->selected_image = $auction->images->first()->image_path;
+                } elseif ($auction->images->count() > 1) {
+                    $auction->selected_image = $auction->images->random()->image_path;
+                } else {
+                    $auction->selected_image = null;
+                }
+
+                return $auction;
+            });
+
+        return Inertia::render('User/AuctionPage', [
+            'activeAuctions' => $activeAuctions,
+            'pendingAuctions' => $pendingAuctions,
+        ]); 
+    }
 }

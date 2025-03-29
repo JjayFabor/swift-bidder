@@ -1,5 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/Layouts/AppSidebar";
+import { AppSidebar } from "@/components/layouts/AppSidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
