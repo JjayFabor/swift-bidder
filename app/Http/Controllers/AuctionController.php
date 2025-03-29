@@ -37,7 +37,7 @@ class AuctionController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */ 
+     */
     public function store(StoreAuctionRequest $request)
     {
         try {
@@ -74,7 +74,7 @@ class AuctionController extends Controller
             $auction->video_path = asset('storage/' . $auction->video_path);
         }
 
-        return Inertia::render('Admin/Auctions/ShowAuction', [
+        return Inertia::render('Auction/ShowAuction', [
             'auction' => $auction,
             'images' => $auction_images,
         ]);

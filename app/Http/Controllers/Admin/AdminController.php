@@ -70,7 +70,7 @@ class AdminController extends Controller
                 return $auction;
             });
 
-        return Inertia::render('User/AuctionPage', [
+        return Inertia::render('Auction/AuctionPage', [
             'activeAuctions' => $activeAuctions,
             'pendingAuctions' => $pendingAuctions,
         ]);

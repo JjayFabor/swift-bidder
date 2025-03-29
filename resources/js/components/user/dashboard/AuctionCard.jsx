@@ -1,10 +1,17 @@
+import { router } from "@inertiajs/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Clock } from "lucide-react";
+import { toast } from 'sonner';
 import moment from "moment";
 
 export default function AuctionCard({ auction, onClick }) {
+    // Show Auction
+    const showAuction = (auctionId) => {
+        router.get(route("auction.show", auctionId));
+    };
+
     // Format end time to display time remaining
     const formatTimeRemaining = (endTimeStr) => {
         try {
@@ -57,8 +64,7 @@ export default function AuctionCard({ auction, onClick }) {
     return (
         <Card
             key={auction.id}
-            className="flex-shrink-0 w-72 bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] cursor-pointer group"
-            onClick={() => onClick(auction.id)}
+            className="flex-shrink-0 w-72 bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] group"
         >
             <div className="relative h-44 overflow-hidden">
                 <img
@@ -100,6 +106,7 @@ export default function AuctionCard({ auction, onClick }) {
                         variant="ghost"
                         size="sm"
                         className="text-blue-400 hover:text-blue-300 hover:bg-blue-900/30 p-1 px-2 rounded text-xs font-medium"
+                        onClick={() => showAuction(auction.id)}
                     >
                         View Details
                     </Button>
