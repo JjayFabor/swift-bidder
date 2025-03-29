@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Auction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class AuctionService
 {
@@ -15,6 +16,20 @@ class AuctionService
     public function getAuctionById($id)
     {
         return Auction::findOrFail($id);
+    }
+
+    public function getAuctionCounts(): array
+    {
+        return Cache::remember('auction_counts', now()->addMinutes(5), function () {
+            return Auction::selectRaw("
+                COUNT(*) as total_auctions,
+                SUM(status = 'active') as total_active_auctions,
+                SUM(status = 'pending') as total_pending_auctions,
+                SUM(status = 'closed') as total_closed_auctions
+            ")
+            ->first()
+            ->toArray();
+        });
     }
 
     public function createAuction(array $data)

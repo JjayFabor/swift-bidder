@@ -23,7 +23,7 @@ class AdminController extends Controller
     public function index()
     {
         $auctions = $this->auctionService->getAllAuctions();
-        $auctionCounts = Auction::auctionCounts();
+        $auctionCounts = $this->auctionService->getAuctionCounts();
         $userCounts = $this->userService->getUserCounts();
 
         return Inertia::render('Admin/AdminDashboard',[

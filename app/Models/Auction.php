@@ -64,16 +64,4 @@ class Auction extends Model
     {
         return now() > $this->end_time;
     }
-
-    public static function auctionCounts(): array
-    {
-        return self::selectRaw("
-            COUNT(*) as total_auctions,
-            SUM(status = 'active') as total_active_auctions,
-            SUM(status = 'pending') as total_pending_auctions,
-            SUM(status = 'closed') as total_closed_auctions
-        ")
-        ->first()
-        ->toArray();
-    }
 }
