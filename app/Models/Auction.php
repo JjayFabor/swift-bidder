@@ -65,21 +65,15 @@ class Auction extends Model
         return now() > $this->end_time;
     }
 
-    /**
-     * Summary of totalAuctions
-     *
-     * @return int
-     */
-    public static function totalAuctions()
+    public static function auctionCounts(): array
     {
-        return self::count();
-    }
-
-    /**
-     * Summary of totalActiveAuctions
-     */
-    public static function totalActiveAuctions(): int
-    {
-        return self::where('status', 'active')->count();
+        return self::selectRaw("
+            COUNT(*) as total_auctions,
+            SUM(status = 'active') as total_active_auctions,
+            SUM(status = 'pending') as total_pending_auctions,
+            SUM(status = 'closed') as total_closed_auctions
+        ")
+        ->first()
+        ->toArray();
     }
 }
