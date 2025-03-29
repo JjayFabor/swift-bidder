@@ -7,6 +7,7 @@ use App\Models\AuctionImage;
 use Illuminate\Http\Request;
 use App\Rules\ValidAuctionTimes;
 use App\Services\AuctionService;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreAuctionRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -77,6 +78,7 @@ class AuctionController extends Controller
         return Inertia::render('Auction/ShowAuction', [
             'auction' => $auction,
             'images' => $auction_images,
+            'user' => Auth::user(),
         ]);
     }
 

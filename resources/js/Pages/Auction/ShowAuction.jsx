@@ -22,12 +22,14 @@ import moment from "moment";
 import AppLayout from "@/components/layouts/AppLayout";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import BidModal from "@/components/user/modal/BidModal";
 
 export default function ShowAuction() {
-    const { auction, images } = usePage().props;
+    const { auction, images, user } = usePage().props;
     const [imageModalOpen, setImageModalOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [zoomLevel, setZoomLevel] = useState(1);
+    const [ isBidModalOpen, setIsBidModalOpen ] = useState(false);
 
     // Calculate time remaining if auction is active
     const calculateTimeRemaining = () => {
@@ -90,7 +92,6 @@ export default function ShowAuction() {
         setZoomLevel(1);
     };
 
-
     return (
         <div className="max-w-8xl mx-auto p-4 sm:p-6">
             <div className="flex items-center justify-between mb-6">
@@ -127,6 +128,24 @@ export default function ShowAuction() {
                             </div>
                         )}
                     </div>
+
+                    {/* Bid Button (Only for Bidders) */}
+                    {user?.role === "bidder" && (
+                        <div className="mb-4">
+                            <Button
+                                onClick={() => setIsBidModalOpen(true)}
+                                className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2 rounded-lg shadow-md"
+                            >
+                                Place a Bid
+                            </Button>
+                        </div>
+                    )}
+
+                    <BidModal
+                        isOpen={isBidModalOpen}
+                        onClose={() => setIsBidModalOpen(false)}
+                        auction={auction}
+                    />
 
                     <h3 className="flex items-center text-lg font-semibold text-white mb-4">
                         <ImageIcon className="h-5 w-5 mr-2 text-blue-400" />
