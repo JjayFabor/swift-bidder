@@ -20,14 +20,15 @@ class AdminController extends Controller
     public function index()
     {
         $auctions = $this->auctionService->getAllAuctions();
+        $counts = Auction::auctionCounts();
 
         return Inertia::render('Admin/AdminDashboard',[
             'auctions' => [
                 'dataAuctions' => $auctions->items(),
                 'links' => $auctions->toArray()['links'],
             ],
-            'totalActiveAuctions' => Auction::totalActiveAuctions(),
-            'totalAuctions' => Auction::totalAuctions(),
+            'totalActiveAuctions' => $counts['total_active_auctions'],
+            'totalAuctions' => $counts['total_auctions'],
             'totalBidders' => User::totalBidders(),
         ]);
     }
@@ -67,6 +68,6 @@ class AdminController extends Controller
         return Inertia::render('User/AuctionPage', [
             'activeAuctions' => $activeAuctions,
             'pendingAuctions' => $pendingAuctions,
-        ]); 
+        ]);
     }
 }
