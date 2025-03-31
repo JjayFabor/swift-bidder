@@ -25,7 +25,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import BidModal from "@/components/user/modal/BidModal";
 
 export default function ShowAuction() {
-    const { auction, images, user } = usePage().props;
+    const { auction: initialAuction, images, user } = usePage().props;
+    const [auction, setAuction] = useState(initialAuction);
     const [imageModalOpen, setImageModalOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [zoomLevel, setZoomLevel] = useState(1);
@@ -145,6 +146,8 @@ export default function ShowAuction() {
                         isOpen={isBidModalOpen}
                         onClose={() => setIsBidModalOpen(false)}
                         auction={auction}
+                        setAuction={setAuction}
+                        user={user}
                     />
 
                     <h3 className="flex items-center text-lg font-semibold text-white mb-4">
