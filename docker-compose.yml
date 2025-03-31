@@ -60,6 +60,8 @@ services:
             - mysql
         networks:
             - sail
+        volumes:
+          - ./phpmyadmin-theme/blueberry:/var/www/html/themes/blueberry
 
 networks:
     sail:
