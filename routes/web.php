@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use App\Events\TestEvent;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\Auth\LoginController;
@@ -28,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Bidder User Routes
     Route::get('/', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/auctions/{id}', [AuctionController::class, 'show'])->name('auction.show');
+    Route::post('/auctions/{id}/bid', [BidController::class, 'store'])->name('auction.bid');
 
     // Admin-Specific Routes
     Route::middleware(['admin'])->prefix('admin')->group(function () {

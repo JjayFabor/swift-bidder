@@ -9,11 +9,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { toast } from 'sonner';
+import { useForm } from "@inertiajs/react";
+import { CheckCircle, CircleX } from "lucide-react";
+import { route } from "ziggy-js";
 
-export default function BidModal({ isOpen, onClose, auction }) {
-    const [bidAmount, setBidAmount] = useState("");
-    const [bidError, setBidError] = useState("");
+export default function BidModal({ isOpen, onClose, auction, setAuction, user }) {
     const bidInputRef = useRef(null);
+    const [bidError, setBidError] = useState("");
+
+    const { data, setData, post, processing, reset } = useForm({
+        auction_id: auction.id,
+        user_id: user.id,
+        bid_amount: "",
+    });
 
     const formatCurrency = (value) => {
         return parseFloat(value).toLocaleString("en-US", {
@@ -22,24 +31,32 @@ export default function BidModal({ isOpen, onClose, auction }) {
         });
     };
 
-    const handleBidSubmit = () => {
-        const amount = parseFloat(bidAmount);
+    const handleBidSubmit = (e) => {
+        e.preventDefault();
 
-        if (!amount || isNaN(amount)) {
-            setBidError("Please enter a valid amount");
-            return;
-        }
+        post(route("auction.bid", { id: auction.id }), {
+            preserveScroll: true,
+            onSuccess: (page) => {
+                reset();
+                onClose();
 
-        if (amount <= parseFloat(auction.current_price)) {
-            setBidError("Bid must be higher than current price");
-            return;
-        }
+                if (setAuction) {
+                    setAuction(page.props.auction);
+                }
 
-        console.log(`Submitting bid of $${amount}`);
-
-        setBidError("");
-        setBidAmount("");
-        onClose(); // Close the modal after submitting
+                toast.success("Bid placed successfully!", {
+                    description: `You bid $${data.bid_amount} on ${auction.title}`,
+                    icon: <CheckCircle className="text-green-500 w-6 h-6 p-2" />,
+                });
+            },
+            onError: (errors) => {
+                setBidError(errors.bid_amount || "Failed to place bid");
+                toast.error("Bid failed!", {
+                    description: "Please check the bid amount and try again.",
+                    icon: <CircleX className="text-red-500 w-6 h-6 p-2" />,
+                });
+            },
+        });
     };
 
     return (
@@ -75,9 +92,10 @@ export default function BidModal({ isOpen, onClose, auction }) {
                             type="number"
                             step="0.01"
                             min={parseFloat(auction.current_price) + 1}
-                            value={bidAmount}
+                            value={data.bid_amount}
                             onChange={(e) => {
-                                setBidAmount(e.target.value);
+                                const value = e.target.value;
+                                setData("bid_amount", value === "" ? "" : parseFloat(value));
                                 setBidError("");
                             }}
                             className="bg-gray-700 border-gray-600 text-white mt-1"
@@ -92,8 +110,12 @@ export default function BidModal({ isOpen, onClose, auction }) {
                     <Button onClick={onClose} className="border-gray-600 text-gray-300 hover:bg-gray-700">
                         Cancel
                     </Button>
-                    <Button onClick={handleBidSubmit} className="bg-blue-600 hover:bg-blue-500 text-white">
-                        Submit Bid
+                    <Button
+                        onClick={handleBidSubmit}
+                        className="bg-blue-600 hover:bg-blue-500 text-white"
+                        disabled={processing}
+                    >
+                        {processing ? "Submitting..." : "Submit Bid"}
                     </Button>
                 </DialogFooter>
             </DialogContent>
