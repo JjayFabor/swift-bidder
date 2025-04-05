@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bid;
-use Illuminate\Http\Request;
-use App\Services\AuctionService;
 use App\Http\Requests\StoreBidRequest;
+use App\Models\Bid;
+use App\Services\AuctionService;
 
 class BidController extends Controller
 {
@@ -16,12 +15,11 @@ class BidController extends Controller
         $this->auctionService = $auctionService;
     }
 
-
     public function store(StoreBidRequest $request)
     {
         $auction = $this->auctionService->getAuctionById($request->auction_id);
 
-        if (!$auction) {
+        if (! $auction) {
             return back()->withErrors(['errors' => 'Auction not found']);
         }
 

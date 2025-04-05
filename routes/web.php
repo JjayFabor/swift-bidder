@@ -1,16 +1,16 @@
     <?php
 
-use Inertia\Inertia;
 use App\Events\TestEvent;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BidController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\VerifyTokenController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BidController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VerifyTokenController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -42,12 +42,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-
-
 /** This is for test pusher */
 Route::get('/test-broadcast', function () {
-    broadcast(new TestEvent("Hello, this is a test message!"));
-    return "TestEvent has been broadcasted!";
+    broadcast(new TestEvent('Hello, this is a test message!'));
+
+    return 'TestEvent has been broadcasted!';
 });
 
 Route::get('/test-page', function () {

@@ -26,8 +26,8 @@ class StoreAuctionRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'starting_price' => 'required|numeric|min:1',
-            'start_time' => ['required', 'date', new ValidAuctionTimes()],
-            'end_time' => ['required', 'date', new ValidAuctionTimes()],
+            'start_time' => ['required', 'date', new ValidAuctionTimes],
+            'end_time' => ['required', 'date', new ValidAuctionTimes],
             'status' => 'required|in:pending,active,cancelled,closed',
             // Multiple images
             'images' => 'nullable|array',

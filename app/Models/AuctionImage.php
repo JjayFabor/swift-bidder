@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Auction;
 use Illuminate\Database\Eloquent\Model;
 
 class AuctionImage extends Model

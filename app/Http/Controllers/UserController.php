@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Inertia\Inertia;
 use App\Models\Auction;
-use Illuminate\Http\Request;
-use App\Services\UserService;
 use App\Services\AuctionService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
     protected $userService;
+
     protected $auctionService;
 
     public function __construct(UserService $userService, AuctionService $auctionService)

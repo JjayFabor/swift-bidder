@@ -9,7 +9,7 @@ beforeEach(function () {
 
 uses(RefreshDatabase::class);
 
-it('allows an admin to create an auction',  function() {
+it('allows an admin to create an auction', function () {
     $admin = User::factory()->create([
         'name' => 'Test Admin',
         'email' => 'admin@test.com',
@@ -29,7 +29,7 @@ it('allows an admin to create an auction',  function() {
         ]);
 
     $response->assertRedirect(route('admin.dashboard'));
-    
+
     $this->assertDatabaseHas('auctions', [
         'title' => 'Test Auction',
         'description' => 'Test Auction Description',
