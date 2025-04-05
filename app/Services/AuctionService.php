@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Auction;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
 class AuctionService
@@ -27,8 +26,8 @@ class AuctionService
                 SUM(status = 'pending') as total_pending_auctions,
                 SUM(status = 'closed') as total_closed_auctions
             ")
-            ->first()
-            ->toArray();
+                ->first()
+                ->toArray();
         });
     }
 
@@ -38,7 +37,7 @@ class AuctionService
 
         try {
             // Handle video upload
-            if (!empty($data['video_path']) && $data['video_path'] instanceof \Illuminate\Http\UploadedFile) {
+            if (! empty($data['video_path']) && $data['video_path'] instanceof \Illuminate\Http\UploadedFile) {
                 $data['video_path'] = $data['video_path']->store('videos', 'public');
             }
 
@@ -49,14 +48,14 @@ class AuctionService
             $auction = Auction::create($data);
 
             // Handle multiple image uploads
-            if (!empty($data['images']) && is_array($data['images'])) {
+            if (! empty($data['images']) && is_array($data['images'])) {
                 foreach ($data['images'] as $image) {
                     $path = $image->store('images', 'public');
                     $auction->images()->create(['image_path' => $path]);
                 }
             }
 
-            if (!$auction) {
+            if (! $auction) {
                 throw new \Exception('Failed to create auction');
             }
 

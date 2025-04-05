@@ -1,16 +1,16 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Application;
-use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\AdminMiddleware;
-use Illuminate\Console\Scheduling\Schedule;
+use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\HandleInertiaRequests;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -49,6 +49,6 @@ return Application::configure(basePath: dirname(__DIR__))
         //     return $response;
         // });
     })
-    ->withSchedule(function (Schedule $schedule){
+    ->withSchedule(function (Schedule $schedule) {
         $schedule->command('app:update-auction-status')->everyMinute();
     })->create();

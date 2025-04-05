@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('auction_id')->constrained('auctions')->onDelete('cascade');
             $table->string('image_path')->nullable();
-            $table->timestamps();           
+            $table->timestamps();
         });
     }
 

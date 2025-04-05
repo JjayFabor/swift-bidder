@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use Inertia\Inertia;
-use App\Models\Auction;
-use App\Services\UserService;
-use App\Services\AuctionService;
 use App\Http\Controllers\Controller;
+use App\Models\Auction;
+use App\Models\User;
+use App\Services\AuctionService;
+use App\Services\UserService;
+use Inertia\Inertia;
 
 class AdminController extends Controller
 {
     protected $auctionService;
+
     protected $userService;
 
-    public function __construct (AuctionService $auctionService, UserService $userService)
+    public function __construct(AuctionService $auctionService, UserService $userService)
     {
         $this->auctionService = $auctionService;
         $this->userService = $userService;
@@ -25,7 +26,7 @@ class AdminController extends Controller
         $auctions = $this->auctionService->getAllAuctions();
         $auctionCounts = $this->auctionService->getAuctionCounts();
 
-        return Inertia::render('Admin/AdminDashboard',[
+        return Inertia::render('Admin/AdminDashboard', [
             'auctions' => [
                 'dataAuctions' => $auctions->items(),
                 'links' => $auctions->toArray()['links'],

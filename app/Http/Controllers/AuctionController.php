@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use App\Models\AuctionImage;
-use Illuminate\Http\Request;
-use App\Rules\ValidAuctionTimes;
-use App\Services\AuctionService;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreAuctionRequest;
+use App\Models\AuctionImage;
+use App\Services\AuctionService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
 
 class AuctionController extends Controller
 {
@@ -66,13 +65,14 @@ class AuctionController extends Controller
 
         // Prepend full storage URL to images
         $auction_images->transform(function ($image) {
-            $image->image_path = asset('storage/' . $image->image_path);
+            $image->image_path = asset('storage/'.$image->image_path);
+
             return $image;
         });
 
         // Prepend full storage URL to video
         if ($auction->video_path) {
-            $auction->video_path = asset('storage/' . $auction->video_path);
+            $auction->video_path = asset('storage/'.$auction->video_path);
         }
 
         return Inertia::render('Auction/ShowAuction', [
@@ -105,11 +105,12 @@ class AuctionController extends Controller
     {
         $auction = $this->auctionService->getAuctionById($id);
 
-        if(!$auction) {
+        if (! $auction) {
             return back()->withErrors(['errors' => 'Auction not found']);
         }
 
         $auction->delete();
+
         return to_route('admin.dashboard');
     }
 }

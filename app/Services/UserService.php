@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Mail\SendTokenMail;
+use App\Models\User;
 use App\Models\VerifyToken;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Cache;
 
 class UserService
 {
@@ -62,7 +62,7 @@ class UserService
                     ->where('users.role', 'bidder')
                     ->where('last_activity', '>=', $threshold)
                     ->distinct()
-                    ->count('user_id')
+                    ->count('user_id'),
             ];
         });
     }
