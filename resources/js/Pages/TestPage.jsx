@@ -10,7 +10,7 @@ export default function TestPage() {
                 setMessage(event.message);
             });
 
-        return () => {
+        return () => {  
             window.Echo.leaveChannel("test-channel");
         };
     }, []);

@@ -24,7 +24,6 @@ class AdminController extends Controller
     {
         $auctions = $this->auctionService->getAllAuctions();
         $auctionCounts = $this->auctionService->getAuctionCounts();
-        $userCounts = $this->userService->getUserCounts();
 
         return Inertia::render('Admin/AdminDashboard',[
             'auctions' => [
@@ -33,8 +32,7 @@ class AdminController extends Controller
             ],
             'totalActiveAuctions' => $auctionCounts['total_active_auctions'],
             'totalAuctions' => $auctionCounts['total_auctions'],
-            'totalBidders' => $userCounts['total_bidders'],
-            'onlineBidders' => $userCounts['online_users'],
+            'totalBidders' => User::totalBidders(),
         ]);
     }
 

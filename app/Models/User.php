@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Bid;
-use App\Enums\UserRole;
 use App\Models\Auction;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,6 +49,12 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+
     public function bids()
     {
         return $this->hasMany(Bid::class);
@@ -67,6 +72,6 @@ class User extends Authenticatable
      */
     public static function totalBidders(): int
     {
-        return self::where('role', UserRole::BIDDER)->count();
+        return self::where('role', 'bidder')->count();
     }
 }
