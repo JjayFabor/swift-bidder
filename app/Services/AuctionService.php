@@ -57,4 +57,24 @@ class AuctionService
             return $auction;
         });
     }
+
+    public function updateAuction(array $data, $id): Auction
+    {
+        return DB::transaction(function () use ($data, $id) {
+            $auction = Auction::lockForUpdate()->findOrFail($id);
+
+            if ($auction->bids()->exists()) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'starting_price' => 'Cannot edit an auction that already has bids.',
+                ]);
+            }
+
+            $data['current_price'] = $data['starting_price'];
+            $auction->update($data);
+
+            $this->flushCounts();
+
+            return $auction->fresh();
+        });
+    }
 }

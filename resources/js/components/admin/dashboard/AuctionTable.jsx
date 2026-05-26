@@ -13,11 +13,14 @@ import {
     TableRow
 } from "@/components/ui/table";
 import DeleteAuctionDialog from "@/components/admin/dashboard/DeleteAuctionDialog";
+import EditAuctionModal from "@/components/admin/dashboard/EditAuctionModal";
 import PaginationControls from "@/components/admin/dashboard/PaginationControls";
 
 export default function AuctionTable ({ dataAuctions, onDelete, links }) {
 
     const [deleteAuctionId, setDeleteAuctionId] = useState(null);
+    const [editAuctionId, setEditAuctionId] = useState(null);
+    const editingAuction = dataAuctions.find((a) => a.id === editAuctionId) ?? null;
 
     // Show Auction
     const showAuction = (auctionId) => {
@@ -120,19 +123,21 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                                 )}
                             </TableCell>
                             <TableCell>
-                                <span
-                                    className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                        auction.status === "active"
-                                            ? "bg-green-900 text-green-300"
-                                            : auction.status === "pending"
-                                            ? "bg-yellow-900 text-yellow-300"
-                                            : auction.status === "completed"
-                                            ? "bg-blue-900 text-blue-300"
-                                            : "bg-red-900 text-red-300"
-                                    }`}
-                                >
-                                    {auction.status}
-                                </span>
+                                {(() => {
+                                    const status = auction.effective_status ?? auction.status;
+                                    const cls = status === "active"
+                                        ? "bg-green-900 text-green-300"
+                                        : status === "pending"
+                                        ? "bg-yellow-900 text-yellow-300"
+                                        : status === "closed"
+                                        ? "bg-blue-900 text-blue-300"
+                                        : "bg-red-900 text-red-300";
+                                    return (
+                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${cls}`}>
+                                            {status}
+                                        </span>
+                                    );
+                                })()}
                             </TableCell>
                             <TableCell className="text-center">
                                 <Button
@@ -145,7 +150,7 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                                     View
                                 </Button>
                                 <Button
-                                    onClick={() => showAuction(auction.id)}
+                                    onClick={() => setEditAuctionId(auction.id)}
                                     size="sm"
                                     variant="ghost"
                                     className="group hover:bg-blue-900 hover:text-blue-300"
@@ -178,6 +183,11 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                 </TableBody>
             </Table>
             <PaginationControls links={links}/>
+            <EditAuctionModal
+                isOpen={!!editingAuction}
+                onClose={() => setEditAuctionId(null)}
+                auction={editingAuction}
+            />
         </div>
     );
 };
