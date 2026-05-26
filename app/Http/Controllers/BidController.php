@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BidPlaced;
 use App\Http\Requests\StoreBidRequest;
 use App\Models\Auction;
 use App\Models\Bid;
@@ -15,7 +16,7 @@ class BidController extends Controller
     {
         $userId = Auth::id();
 
-        DB::transaction(function () use ($request, $userId) {
+        $bid = DB::transaction(function () use ($request, $userId) {
             $auction = Auction::lockForUpdate()->findOrFail($request->auction_id);
 
             if (! $auction->isAcceptingBids()) {
@@ -44,7 +45,11 @@ class BidController extends Controller
             ]);
 
             $auction->update(['current_price' => $bid->bid_amount]);
+
+            return $bid;
         });
+
+        broadcast(new BidPlaced($bid))->toOthers();
 
         return redirect()->back()->with('success', 'Bid placed successfully');
     }

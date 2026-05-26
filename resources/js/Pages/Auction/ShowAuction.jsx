@@ -1,5 +1,5 @@
 import { usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
     ArrowLeft,
@@ -31,9 +31,28 @@ export default function ShowAuction() {
     const [zoomLevel, setZoomLevel] = useState(1);
     const [ isBidModalOpen, setIsBidModalOpen ] = useState(false);
 
-    // Calculate time remaining if auction is active
+    useEffect(() => {
+        if (!window.Echo || !initialAuction?.id) return;
+
+        const channelName = `auction.${initialAuction.id}`;
+        const channel = window.Echo.channel(channelName);
+
+        channel.listen(".BidPlaced", (event) => {
+            setAuction((prev) => ({
+                ...prev,
+                current_price: event.currentPrice,
+            }));
+        });
+
+        return () => {
+            window.Echo.leaveChannel(channelName);
+        };
+    }, [initialAuction?.id]);
+
+    const effectiveStatus = auction.effective_status ?? auction.status;
+
     const calculateTimeRemaining = () => {
-        if (auction.status !== "active") return null;
+        if (effectiveStatus !== "active") return null;
 
         const endTime = moment(auction.end_time);
         const now = moment();
@@ -106,10 +125,10 @@ export default function ShowAuction() {
 
                 <Badge
                     className={`px-4 py-1.5 ${getStatusStyles(
-                        auction.status
+                        effectiveStatus
                     )} uppercase tracking-wider text-xs font-semibold`}
                 >
-                    {auction.status}
+                    {effectiveStatus}
                 </Badge>
             </div>
 
