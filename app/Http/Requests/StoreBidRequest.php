@@ -24,7 +24,6 @@ class StoreBidRequest extends FormRequest
         return [
             'bid_amount' => 'required|numeric|min:1',
             'auction_id' => 'required|exists:auctions,id',
-            'user_id' => 'required|exists:users,id',
         ];
     }
 }

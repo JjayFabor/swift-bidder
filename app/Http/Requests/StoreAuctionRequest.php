@@ -29,11 +29,8 @@ class StoreAuctionRequest extends FormRequest
             'start_time' => ['required', 'date', new ValidAuctionTimes],
             'end_time' => ['required', 'date', new ValidAuctionTimes],
             'status' => 'required|in:pending,active,cancelled,closed',
-            // Multiple images
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            // Video file
-            'video_path' => 'nullable|mimes:mp4,mov,avi|max:10240',
         ];
     }
 }

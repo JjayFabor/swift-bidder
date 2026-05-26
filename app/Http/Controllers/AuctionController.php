@@ -63,17 +63,11 @@ class AuctionController extends Controller
         $auction = $this->auctionService->getAuctionById($id);
         $auction_images = AuctionImage::where('auction_id', $id)->get();
 
-        // Prepend full storage URL to images
         $auction_images->transform(function ($image) {
             $image->image_path = asset('storage/'.$image->image_path);
 
             return $image;
         });
-
-        // Prepend full storage URL to video
-        if ($auction->video_path) {
-            $auction->video_path = asset('storage/'.$auction->video_path);
-        }
 
         return Inertia::render('Auction/ShowAuction', [
             'auction' => $auction,
@@ -104,12 +98,8 @@ class AuctionController extends Controller
     public function destroy(string $id)
     {
         $auction = $this->auctionService->getAuctionById($id);
-
-        if (! $auction) {
-            return back()->withErrors(['errors' => 'Auction not found']);
-        }
-
         $auction->delete();
+        $this->auctionService->flushCounts();
 
         return to_route('admin.dashboard');
     }

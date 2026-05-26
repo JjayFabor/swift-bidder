@@ -20,7 +20,6 @@ export default function BidModal({ isOpen, onClose, auction, setAuction, user })
 
     const { data, setData, post, processing, reset } = useForm({
         auction_id: auction.id,
-        user_id: user.id,
         bid_amount: "",
     });
 

@@ -26,7 +26,6 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
         start_time: '',
         end_time: '',
         status: '',
-        video_path: null,
         images: [],
     })
 
@@ -35,23 +34,16 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
 
         const formData = new FormData();
 
-        // Append text fields
         Object.keys(data).forEach((key) => {
-            if (key !== 'images' && key !== 'video_path') {
+            if (key !== 'images') {
                 formData.append(key, data[key]);
             }
         });
 
-        // Append multiple images
         if (data.images.length > 0) {
             data.images.forEach((image, index) => {
                 formData.append(`images[${index}]`, image);
             });
-        }
-
-        // Append video
-        if (data.video_path) {
-            formData.append('video_path', data.video_path);
         }
 
         post(route('admin.auction.store'), {
@@ -143,22 +135,6 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                         />
                     </div>
                     {errors.images && <p className="text-red-500 text-sm mt-1">{errors.images}</p>}
-                </FormItem>
-                <FormItem>
-                    <label htmlFor="video_path" className="block text-sm font-medium">
-                        Video
-                    </label>
-                    <div className="relative flex flex-col gap-4">
-                        <Input
-                            id="video_path"
-                            name="video_path"
-                            type="file"
-                            accept="video/mp4,video/x-m4v,video/*"
-                            className="file:mr-4 file:px-4 file:rounded-lg file:border file:border-gray-300 file:bg-gray-800 file:text-white file:hover:bg-gray-700"
-                            onChange={(e) => setData('video_path', e.target.files[0])}
-                        />
-                    </div>
-                    {errors.video_path && <p className="text-red-500 text-sm mt-1">{errors.video_path}</p>}
                 </FormItem>
                 <FormItem>
                     <label htmlFor="starting_price" className="block text-sm font-medium">

@@ -7,7 +7,6 @@ import {
     DollarSign,
     Tag,
     CalendarDays,
-    Film,
     Info,
     Award,
     AlertCircle,
@@ -236,31 +235,6 @@ export default function ShowAuction() {
                         </div>
                     </div>
 
-                    {/* Video Preview */}
-                    <div className="px-6 pb-6">
-                        <h3 className="flex items-center text-lg font-semibold text-white mb-4">
-                            <Film className="h-5 w-5 mr-2 text-blue-400" />
-                            Auction Video
-                        </h3>
-                        {auction.video_path ? (
-                            <div className="rounded-lg overflow-hidden border border-gray-700 shadow-md">
-                                <video controls className="w-full max-w-full">
-                                    <source
-                                        src={auction.video_path}
-                                        type="video/mp4"
-                                    />
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-3 bg-gray-900 p-4 rounded-lg border border-gray-700">
-                                <AlertCircle className="h-6 w-6 text-yellow-400" />
-                                <p className="text-gray-300">
-                                    No video available for this auction.
-                                </p>
-                            </div>
-                        )}
-                    </div>
                 </CardContent>
             </Card>
 

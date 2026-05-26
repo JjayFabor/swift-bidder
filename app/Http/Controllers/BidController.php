@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBidRequest;
 use App\Models\Bid;
 use App\Services\AuctionService;
+use Illuminate\Support\Facades\Auth;
 
 class BidController extends Controller
 {
@@ -19,21 +20,18 @@ class BidController extends Controller
     {
         $auction = $this->auctionService->getAuctionById($request->auction_id);
 
-        if (! $auction) {
-            return back()->withErrors(['errors' => 'Auction not found']);
+        if ($request->bid_amount <= $auction->current_price) {
+            return back()->withErrors(['bid_amount' => 'Bid amount must be greater than the current price']);
         }
 
-        $current_price = $auction->current_price;
-
-        if ($request->bid_amount <= $current_price) {
-            return back()->withErrors(['errors' => 'Bid amount must be greater than the current price']);
-        }
-
-        $bid = Bid::create($request->validated());
+        $bid = Bid::create([
+            'auction_id' => $auction->id,
+            'user_id' => Auth::id(),
+            'bid_amount' => $request->bid_amount,
+        ]);
 
         $auction->update(['current_price' => $bid->bid_amount]);
 
         return redirect()->back()->with('success', 'Bid placed successfully');
-
     }
 }
