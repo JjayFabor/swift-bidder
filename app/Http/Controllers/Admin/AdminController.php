@@ -39,35 +39,16 @@ class AdminController extends Controller
 
     public function auctionPage()
     {
-        $activeAuctions = Auction::with(['images'])
-            ->where('status', 'active')
-            ->get()
-            ->map(function ($auction) {
-                if ($auction->images->count() === 1) {
-                    $auction->selected_image = $auction->images->first()->image_path;
-                } elseif ($auction->images->count() > 1) {
-                    $auction->selected_image = $auction->images->random()->image_path;
-                } else {
-                    $auction->selected_image = null;
-                }
+        $attachSelectedImage = function ($auction) {
+            $auction->selected_image = $auction->images->isEmpty()
+                ? null
+                : $auction->images->random()->image_path;
 
-                return $auction;
-            });
+            return $auction;
+        };
 
-        $pendingAuctions = Auction::with(['images'])
-            ->where('status', 'pending')
-            ->get()
-            ->map(function ($auction) {
-                if ($auction->images->count() === 1) {
-                    $auction->selected_image = $auction->images->first()->image_path;
-                } elseif ($auction->images->count() > 1) {
-                    $auction->selected_image = $auction->images->random()->image_path;
-                } else {
-                    $auction->selected_image = null;
-                }
-
-                return $auction;
-            });
+        $activeAuctions = Auction::with('images')->accepting()->get()->map($attachSelectedImage);
+        $pendingAuctions = Auction::with('images')->upcoming()->get()->map($attachSelectedImage);
 
         return Inertia::render('Auction/AuctionPage', [
             'activeAuctions' => $activeAuctions,

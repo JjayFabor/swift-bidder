@@ -23,14 +23,12 @@ class AuctionService
     public function getAuctionCounts(): array
     {
         return Cache::remember(self::COUNTS_CACHE_KEY, now()->addMinutes(5), function () {
-            return Auction::selectRaw("
-                COUNT(*) as total_auctions,
-                SUM(status = 'active') as total_active_auctions,
-                SUM(status = 'pending') as total_pending_auctions,
-                SUM(status = 'closed') as total_closed_auctions
-            ")
-                ->first()
-                ->toArray();
+            return [
+                'total_auctions' => Auction::count(),
+                'total_active_auctions' => Auction::accepting()->count(),
+                'total_pending_auctions' => Auction::upcoming()->count(),
+                'total_closed_auctions' => Auction::finished()->count(),
+            ];
         });
     }
 
