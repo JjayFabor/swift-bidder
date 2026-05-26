@@ -14,7 +14,7 @@ import { useForm } from "@inertiajs/react";
 import { CheckCircle, CircleX } from "lucide-react";
 import { route } from "ziggy-js";
 
-export default function BidModal({ isOpen, onClose, auction, setAuction, user }) {
+export default function BidModal({ isOpen, onClose, auction, setAuction, setBids, user }) {
     const bidInputRef = useRef(null);
     const [bidError, setBidError] = useState("");
 
@@ -41,6 +41,10 @@ export default function BidModal({ isOpen, onClose, auction, setAuction, user })
 
                 if (setAuction) {
                     setAuction(page.props.auction);
+                }
+
+                if (setBids && page.props.recentBids) {
+                    setBids(page.props.recentBids);
                 }
 
                 toast.success("Bid placed successfully!", {

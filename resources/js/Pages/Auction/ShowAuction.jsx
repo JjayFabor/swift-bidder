@@ -24,8 +24,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import BidModal from "@/components/user/modal/BidModal";
 
 export default function ShowAuction() {
-    const { auction: initialAuction, images, user } = usePage().props;
+    const { auction: initialAuction, images, recentBids: initialBids, user } = usePage().props;
     const [auction, setAuction] = useState(initialAuction);
+    const [bids, setBids] = useState(initialBids ?? []);
     const [imageModalOpen, setImageModalOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [zoomLevel, setZoomLevel] = useState(1);
@@ -42,6 +43,20 @@ export default function ShowAuction() {
                 ...prev,
                 current_price: event.currentPrice,
             }));
+            setBids((prev) => {
+                if (prev.some((b) => b.id === event.bidId)) return prev;
+                const next = [
+                    {
+                        id: event.bidId,
+                        bid_amount: event.bidAmount,
+                        bidder_id: event.bidderId,
+                        bidder_name: event.bidderName,
+                        created_at: event.createdAt,
+                    },
+                    ...prev,
+                ];
+                return next.slice(0, 10);
+            });
         });
 
         return () => {
@@ -165,6 +180,7 @@ export default function ShowAuction() {
                         onClose={() => setIsBidModalOpen(false)}
                         auction={auction}
                         setAuction={setAuction}
+                        setBids={setBids}
                         user={user}
                     />
 
@@ -254,6 +270,66 @@ export default function ShowAuction() {
                         </div>
                     </div>
 
+                    <div className="px-6 pb-6">
+                        <h3 className="flex items-center text-lg font-semibold text-white mb-4">
+                            <Award className="h-5 w-5 mr-2 text-blue-400" />
+                            Recent Bids
+                        </h3>
+
+                        {bids.length === 0 ? (
+                            <div className="flex items-center gap-3 bg-gray-900 p-4 rounded-lg border border-gray-700">
+                                <AlertCircle className="h-6 w-6 text-yellow-400" />
+                                <p className="text-gray-300">
+                                    No bids yet. Be the first to bid.
+                                </p>
+                            </div>
+                        ) : (
+                            <ul className="space-y-2">
+                                {bids.map((bid, index) => {
+                                    const isWinner = index === 0;
+                                    const isMine = user?.id && bid.bidder_id === user.id;
+                                    return (
+                                        <li
+                                            key={bid.id}
+                                            className={`flex items-center justify-between rounded-lg border px-4 py-3 ${
+                                                isWinner
+                                                    ? "bg-blue-900/30 border-blue-500"
+                                                    : "bg-gray-800/60 border-gray-700"
+                                            }`}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                {isWinner && (
+                                                    <Award className="h-5 w-5 text-yellow-300" />
+                                                )}
+                                                <div>
+                                                    <p className="text-white font-medium">
+                                                        {bid.bidder_name}
+                                                        {isMine && (
+                                                            <span className="ml-2 text-xs text-blue-300">
+                                                                (you)
+                                                            </span>
+                                                        )}
+                                                    </p>
+                                                    <p className="text-xs text-gray-400">
+                                                        {moment(bid.created_at).fromNow()}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p
+                                                className={`text-lg font-bold ${
+                                                    isWinner
+                                                        ? "text-blue-300"
+                                                        : "text-gray-200"
+                                                }`}
+                                            >
+                                                ${formatCurrency(bid.bid_amount)}
+                                            </p>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        )}
+                    </div>
                 </CardContent>
             </Card>
 

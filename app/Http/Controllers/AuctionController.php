@@ -69,9 +69,23 @@ class AuctionController extends Controller
             return $image;
         });
 
+        $recentBids = $auction->bids()
+            ->with('user:id,name')
+            ->latest('id')
+            ->limit(10)
+            ->get()
+            ->map(fn ($bid) => [
+                'id' => $bid->id,
+                'bid_amount' => $bid->bid_amount,
+                'bidder_id' => $bid->user_id,
+                'bidder_name' => $bid->user?->name ?? 'Bidder',
+                'created_at' => $bid->created_at?->toIso8601String(),
+            ]);
+
         return Inertia::render('Auction/ShowAuction', [
             'auction' => $auction,
             'images' => $auction_images,
+            'recentBids' => $recentBids,
             'user' => Auth::user(),
         ]);
     }
