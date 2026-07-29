@@ -99,7 +99,10 @@ services:
       # R2 S3 API endpoint: https://<account-id>.r2.cloudflarestorage.com
       - key: AWS_ENDPOINT
         sync: false
-      # Public base URL used to build image/video links (r2.dev or a custom domain).
+      # Public base URL that image links are built from. Prefer a custom domain
+      # bound to the bucket over the default pub-*.r2.dev hostname: several ad and
+      # privacy blocklists match *.r2.dev wholesale, so images silently fail to load
+      # for a share of real visitors with no error the app can see.
       - key: AWS_URL
         sync: false
       - key: AWS_USE_PATH_STYLE_ENDPOINT
