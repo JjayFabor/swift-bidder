@@ -79,6 +79,11 @@ services:
       # then back to "false". The seeder is idempotent either way.
       - key: RUN_SEEDERS
         value: "false"
+      # DESTRUCTIVE one-shot. Free instances have no shell, so this is the only way
+      # to force a clean demo reset on a deployed service: set to "true", deploy,
+      # then set back to "false". Wipes every auction and bid before reseeding.
+      - key: RUN_DEMO_RESET
+        value: "false"
 
       # --- Object storage (Cloudflare R2, S3-compatible) --------------------
       - key: FILESYSTEM_DISK

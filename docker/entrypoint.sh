@@ -28,6 +28,15 @@ if [ "${RUN_SEEDERS:-false}" = "true" ]; then
     php artisan db:seed --force
 fi
 
+# One-shot escape hatch. The free instance type has no shell or SSH, so this is the
+# only way to run a destructive reset against a deployed demo: set RUN_DEMO_RESET=true,
+# let it deploy, then set it back to false. Unlike RUN_SEEDERS this DELETES every
+# auction and bid — including anything testers created — before reseeding.
+if [ "${RUN_DEMO_RESET:-false}" = "true" ]; then
+    echo "==> Resetting demo data (destructive: clears all auctions and bids)"
+    php artisan demo:reset --force
+fi
+
 echo "==> Caching config, routes and views"
 php artisan config:cache
 php artisan route:cache
