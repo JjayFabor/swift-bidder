@@ -1,0 +1,24 @@
+{
+  "//": "Defaults that fight how the docs in this repo are deliberately written.",
+
+  "MD013": false,
+  "//MD013": "Line length: prose is wrapped at ~90 chars, not 80.",
+
+  "MD029": false,
+  "//MD029": "Ordered list prefix: PLAN.md numbers steps continuously across phase headings so they can be referenced as 'Step 4'.",
+
+  "MD036": false,
+  "//MD036": "Emphasis as heading: bold sub-labels (**Why:**, **Done**) are used inside sections without introducing extra heading levels.",
+
+  "MD033": false,
+  "//MD033": "Inline HTML: README uses <details> blocks for collapsible sections.",
+
+  "MD004": false,
+  "//MD004": "Bullet style: README mixes dashes and asterisks by nesting level.",
+
+  "MD060": false,
+  "//MD060": "Table pipe alignment: existing tables are not padded to a fixed width.",
+
+  "MD026": false,
+  "//MD026": "Trailing punctuation in headings: README uses colons on some headings."
+}

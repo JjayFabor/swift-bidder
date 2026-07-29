@@ -51,7 +51,7 @@ export default function AuctionCarousel ({
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+                                className="text-muted-foreground hover:text-foreground"
                                 onClick={() => scroll("left", scrollRef, null, maxScroll)}
                                 disabled={scrollPosition <= 0}
                             >
@@ -60,7 +60,7 @@ export default function AuctionCarousel ({
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+                                className="text-muted-foreground hover:text-foreground"
                                 onClick={() => scroll("right", scrollRef, null, maxScroll)}
                                 disabled={scrollPosition >= maxScroll}
                             >
@@ -85,8 +85,8 @@ export default function AuctionCarousel ({
                             ))}
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center bg-gray-800 rounded-lg p-8 border border-gray-700">
-                            <div className="flex items-center gap-3 text-gray-400">
+                        <div className="flex items-center justify-center bg-muted/40 rounded-lg p-8 border">
+                            <div className="flex items-center gap-3 text-muted-foreground">
                                 <AlertCircle className="w-5 h-5" />
                                 <p>{emptyMessage}</p>
                             </div>

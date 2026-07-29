@@ -1,3 +1,5 @@
+import { router } from "@inertiajs/react";
+
 import {
     Pagination,
     PaginationContent,
@@ -8,15 +10,23 @@ import {
   } from "@/components/ui/pagination";
 
 export default function PaginationControls({ links }) {
+    const previous = links[0];
+    const next = links[links.length - 1];
+
+    const visit = (event, url) => {
+        event.preventDefault();
+        router.visit(url, { preserveScroll: true });
+    };
+
     return (
         <div className="flex justify-end mt-4">
             <Pagination>
                 <PaginationContent>
-                    {links[0]?.url && (
+                    {previous?.url && (
                         <PaginationItem>
                             <PaginationPrevious
-                                href={links[0].url}
-                                onClick={() => Inertia.visit(links[0].url)}
+                                href={previous.url}
+                                onClick={(event) => visit(event, previous.url)}
                             />
                         </PaginationItem>
                     )}
@@ -25,17 +35,17 @@ export default function PaginationControls({ links }) {
                             <PaginationLink
                                 href={link.url}
                                 isActive={link.active}
-                                onClick={() => Inertia.visit(link.url)}
+                                onClick={(event) => visit(event, link.url)}
                             >
                                 {link.label}
                             </PaginationLink>
                         </PaginationItem>
                     ))}
-                    {links[links.length - 1]?.url && (
+                    {next?.url && (
                         <PaginationItem>
                             <PaginationNext
-                                href={links[links.length - 1].url}
-                                onClick={() => Inertia.visit(link.url)}
+                                href={next.url}
+                                onClick={(event) => visit(event, next.url)}
                             />
                         </PaginationItem>
                     )}

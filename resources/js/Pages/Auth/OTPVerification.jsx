@@ -74,11 +74,11 @@ export default function OTPVerification({ errorMessage }) {
             <Toaster position="top-center" />
 
             {/* Card container */}
-            <div className="w-full max-w-md bg-[#273747] p-6 rounded-lg shadow-lg text-white">
+            <div className="w-full max-w-md bg-card text-card-foreground border p-6 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold text-center">
                     OTP Verification
                 </h2>
-                <p className="text-gray-400 text-center text-sm">
+                <p className="text-muted-foreground text-center text-sm">
                     Enter the OTP sent to your email address.
                 </p>
 
@@ -86,7 +86,7 @@ export default function OTPVerification({ errorMessage }) {
                     <div>
                         <label
                             htmlFor="token"
-                            className="block text-sm font-medium text-gray-300"
+                            className="block text-sm font-medium"
                         >
                             Enter 6-digit OTP
                         </label>

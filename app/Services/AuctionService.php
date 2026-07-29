@@ -48,7 +48,9 @@ class AuctionService
             $auction = Auction::create($data);
 
             foreach ($images as $image) {
-                $path = $image->store('images', 'public');
+                // No disk argument: uploads follow FILESYSTEM_DISK, which is the local
+                // `public` disk in development and R2/S3 in production.
+                $path = $image->store('images');
                 $auction->images()->create(['image_path' => $path]);
             }
 

@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Render (and most PaaS) terminate TLS at their edge and forward over HTTP.
+        // Without trusting the proxy headers Laravel builds http:// asset and Ziggy
+        // URLs, which browsers then block as mixed content on an https:// page.
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'auth' => AuthMiddleware::class,
             'verified' => EnsureEmailIsVerified::class,

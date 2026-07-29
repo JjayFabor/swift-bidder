@@ -36,7 +36,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/auction-page', [AdminController::class, 'auctionPage'])->name('admin.auction.page');
 
-        Route::get('/auctions', [AdminController::class, 'auctions'])->name('admin.auctions');
         Route::post('/auctions', [AuctionController::class, 'store'])->name('admin.auction.store');
         Route::put('/auctions/{id}', [AuctionController::class, 'update'])->name('admin.auction.update');
         Route::delete('/auctions/{id}', [AuctionController::class, 'destroy'])->name('admin.auction.delete');

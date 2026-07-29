@@ -4,9 +4,10 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AuthLayout from "../../components/layouts/AuthLayout";
+import DemoAccounts from "@/components/auth/DemoAccounts";
 import { route } from 'ziggy-js';
 
-export default function Login   ()  {
+export default function Login({ demoAccounts })  {
     const { data, setData, post, processing, errors } = useForm({
         email: "",
         password: "",
@@ -19,33 +20,37 @@ export default function Login   ()  {
         post(route("login"));
     };
 
+    const fillDemoAccount = (account) => {
+        setData({ email: account.email, password: account.password });
+    };
+
     return (
-        <div className="w-full max-w-md bg-[#273747] p-6 rounded-lg shadow-lg text-white">
+        <div className="w-full max-w-md bg-card text-card-foreground border p-6 rounded-lg shadow-lg">
             <h2 className="text-3xl font-bold text-center">Welcome Back</h2>
-            <p className="text-gray-400 text-center text-m">Enter your credentials</p>
+            <p className="text-muted-foreground text-center text-m">Enter your credentials</p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                 {/* Email Field */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-300">Email</label>
+                    <label className="block text-sm font-medium">Email</label>
                     <Input
                         type="email"
                         value={data.email}
                         onChange={(e) => setData("email", e.target.value)}
-                        className="bg-gray-700 text-white border-gray-600 focus:ring-blue-500"
+                        className="focus:ring-blue-500"
                     />
                     {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 {/* Password Field */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-300">Password</label>
+                    <label className="block text-sm font-medium">Password</label>
                     <div className="relative">
                         <Input
                             type={showPassword ? "text" : "password"}
                             value={data.password}
                             onChange={(e) => setData("password", e.target.value)}
-                            className="bg-gray-700 text-white border-gray-600 focus:ring-blue-500 pr-10"
+                            className="focus:ring-blue-500 pr-10"
                         />
                         <button
                             type="button"
@@ -53,9 +58,9 @@ export default function Login   ()  {
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? (
-                                <EyeOff className="h-5 w-5 text-gray-400" />
+                                <EyeOff className="h-5 w-5 text-muted-foreground" />
                             ) : (
-                                <Eye className="h-5 w-5 text-gray-400" />
+                                <Eye className="h-5 w-5 text-muted-foreground" />
                             )}
                         </button>
                     </div>
@@ -76,6 +81,8 @@ export default function Login   ()  {
             <div className="items-center justify-between mt-4">
                 <p className="mt-3 text-center">Don't have an account? <a href={route('register')} className="hover:text-blue-300 hover:underline text-blue-400">Register Now</a></p>
             </div>
+
+            <DemoAccounts accounts={demoAccounts} onFill={fillDemoAccount} />
         </div>
     );
 };

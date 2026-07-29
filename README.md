@@ -165,28 +165,46 @@ Mail::raw('Test email from Laravel', function ($message) {
 If the configuration is correct, the email will be sent successfully.
 
 ### 🎯 Helpful Resource:
+
 👉 [How to Set Up Gmail SMTP in Laravel](https://mailtrap.io/blog/laravel-send-email-gmail/#Setting-up-Laravel-email-service-before-sending-emails)
 
 </details>
 
-## 🔑 Seeder Data
+## 🔑 Demo Accounts
 
 <details>
-<summary><b>📥 Admin & User Credentials</b> (Generated from Seeders)</summary>
+<summary><b>📥 Admin & Bidder Credentials</b> (Generated from Seeders)</summary>
 
-### ✅ **Admin Credentials**
+Defined in `config/demo.php` — the seeder and the login screen both read from
+there, so the list only needs changing in one place.
 
-| Email              | Password  |
-|--------------------|-----------|
-| `admin@example.com` | `admin1234` |
+### ✅ **Admin**
 
-### ✅ **User Credentials**
+| Email               | Password    | Can do                           |
+|---------------------|-------------|----------------------------------|
+| `admin@example.com` | `admin1234` | Create, edit and delete auctions |
 
-| Email              | Password  |
-|--------------------|-----------|
-| `test@example.com`  | `test1234` |
+### ✅ **Bidders**
 
-> ⚠️ **Note:** These credentials are created when you run `php artisan migrate --seed`.
+| Email                 | Password     |
+|-----------------------|--------------|
+| `bidder1@example.com` | `bidder1234` |
+| `bidder2@example.com` | `bidder1234` |
+| `bidder3@example.com` | `bidder1234` |
+| `bidder4@example.com` | `bidder1234` |
+
+Four separate bidder accounts exist so several people can test at once and bid
+against each other, instead of sharing one session.
+
+> ⚠️ **Note:** Created by `php artisan migrate --seed`. All accounts are seeded
+> pre-verified, so they skip the OTP step — which matters on hosts that block
+> outbound SMTP.
+
+**Demo mode.** Set `APP_DEMO=true` to list these accounts on the login screen with
+click-to-fill. Leave it `false` anywhere holding real data.
+
+**Resetting.** `php artisan demo:reset` clears all auctions and bids and reseeds a
+clean set. It refuses to run unless `APP_DEMO=true`, unless you pass `--force`.
 
 </details>
 

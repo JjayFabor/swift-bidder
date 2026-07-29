@@ -64,15 +64,11 @@ export default function AuctionCard({ auction, onClick }) {
     return (
         <Card
             key={auction.id}
-            className="flex-shrink-0 w-72 bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] group"
+            className="flex-shrink-0 w-72 rounded-lg overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02] group"
         >
             <div className="relative h-44 overflow-hidden">
                 <img
-                    src={
-                        auction.images?.length > 0
-                            ? `/storage/${auction.images[0].image_path}`
-                            : "/default-image.jpg"
-                    }
+                    src={auction.images?.[0]?.url ?? "/default-image.svg"}
                     alt={auction.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -98,19 +94,19 @@ export default function AuctionCard({ auction, onClick }) {
                 </div>
             </div>
             <div className="p-4">
-                <h3 className="text-lg font-medium text-white line-clamp-2">
+                <h3 className="text-lg font-medium text-card-foreground line-clamp-2">
                     {auction.title}
                 </h3>
                 <div className="flex justify-between items-center mt-3">
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="text-blue-400 hover:text-blue-300 hover:bg-blue-900/30 p-1 px-2 rounded text-xs font-medium"
+                        className="text-blue-600 hover:text-blue-700 hover:bg-blue-100 dark:text-blue-400 dark:hover:text-blue-300 dark:hover:bg-blue-900/30 p-1 px-2 rounded text-xs font-medium"
                         onClick={() => showAuction(auction.id)}
                     >
                         View Details
                     </Button>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-muted-foreground">
                         {auction.bids_count || 0} bids
                     </span>
                 </div>

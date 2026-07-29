@@ -1,0 +1,55 @@
+# Dependencies are installed inside the image, not copied from the host.
+node_modules
+vendor
+
+# Secrets must come from the platform's environment, never the image.
+.env
+.env.*
+
+# Build output is produced in the assets stage.
+public/build
+public/hot
+public/storage
+
+# Host-generated caches must never leak in: packages.php built with dev
+# dependencies present references Debugbar, which does not exist in the
+# --no-dev image, and the app dies at boot. The entrypoint regenerates these.
+bootstrap/cache/*.php
+
+# Local-only state
+storage/logs/*
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/debugbar
+storage/pail
+database/database.sqlite
+
+# VCS / editor / CI noise
+.git
+.github
+.gitignore
+.gitattributes
+.editorconfig
+.vscode
+.idea
+.fleet
+.nova
+.zed
+.phpunit.cache
+.phpunit.result.cache
+.phpactor.json
+
+# Docs and local tooling that have no place in a runtime image
+README.md
+PLAN.md
+LICENSE
+render.yaml
+AppScreenshots
+phpmyadmin-theme
+phpmyadmin-themes
+docker-compose.yml
+tests
+vscode.deb
+packages.microsoft.gpg
+*.deb

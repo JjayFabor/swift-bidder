@@ -1,0 +1,149 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+#
+# Creates the free-tier stack: one Docker web service + one Postgres database.
+#
+# Known free-tier limits, accepted deliberately:
+#   * The web service sleeps after 15 minutes idle (~50s cold start).
+#   * The database is DELETED 30 days after creation. Recreate it and redeploy
+#     with RUN_SEEDERS=true — the seeder is idempotent, so this is a one-step recovery.
+#   * No background workers or cron jobs, which is why QUEUE_CONNECTION is `sync`
+#     and auction status transitions run via request middleware instead of a schedule.
+
+databases:
+  - name: swift-bidder-db
+    databaseName: swift_bidder_db
+    user: swift_bidder
+    plan: free
+    region: singapore
+
+services:
+  - type: web
+    name: swift-bidder
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /up
+    envVars:
+      # --- Core -------------------------------------------------------------
+      - key: APP_NAME
+        value: Swift Bidder
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_TIMEZONE
+        value: Asia/Manila
+      # Generate with: php artisan key:generate --show
+      - key: APP_KEY
+        sync: false
+      # Set to the service's public https:// URL after the first deploy — or to your
+      # custom domain once its DNS verifies. Laravel builds asset and Ziggy URLs from
+      # this, so a stale value breaks the frontend on the new hostname.
+      - key: APP_URL
+        sync: false
+      # Publishes working demo credentials on the login screen. Intentional for a
+      # public portfolio demo; turn off for anything real.
+      - key: APP_DEMO
+        value: "true"
+
+      # --- Database ---------------------------------------------------------
+      - key: DB_CONNECTION
+        value: pgsql
+      # Laravel's config/database.php reads DB_URL and parses the postgresql:// DSN.
+      - key: DB_URL
+        fromDatabase:
+          name: swift-bidder-db
+          property: connectionString
+
+      # --- Drivers ----------------------------------------------------------
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      # `sync` is required: SendTokenMail implements ShouldQueue, and the free tier
+      # has no worker to drain a queue. Without this, OTP emails are never sent and
+      # registration silently breaks.
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: warning
+
+      # --- Deploy behaviour -------------------------------------------------
+      - key: RUN_MIGRATIONS
+        value: "true"
+      # Flip to "true" for the first deploy (and after any database recreation),
+      # then back to "false". The seeder is idempotent either way.
+      - key: RUN_SEEDERS
+        value: "false"
+
+      # --- Object storage (Cloudflare R2, S3-compatible) --------------------
+      - key: FILESYSTEM_DISK
+        value: s3
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_BUCKET
+        sync: false
+      - key: AWS_DEFAULT_REGION
+        value: auto
+      # R2 S3 API endpoint: https://<account-id>.r2.cloudflarestorage.com
+      - key: AWS_ENDPOINT
+        sync: false
+      # Public base URL used to build image/video links (r2.dev or a custom domain).
+      - key: AWS_URL
+        sync: false
+      - key: AWS_USE_PATH_STYLE_ENDPOINT
+        value: "false"
+
+      # --- Broadcasting -----------------------------------------------------
+      # Required: BidController broadcasts BidPlaced, and the auction page subscribes
+      # for live bid updates. All six values below must be set or real-time silently
+      # stops working.
+      - key: BROADCAST_CONNECTION
+        value: pusher
+      - key: PUSHER_APP_ID
+        sync: false
+      - key: PUSHER_APP_KEY
+        sync: false
+      - key: PUSHER_APP_SECRET
+        sync: false
+      - key: PUSHER_APP_CLUSTER
+        value: ap1
+      - key: PUSHER_PORT
+        value: "443"
+      - key: PUSHER_SCHEME
+        value: https
+      # VITE_* values are compiled into the JS bundle, so changing one needs a
+      # *rebuild*, not just a restart. Render exposes service env vars to the Docker
+      # build as build args, which is how the Dockerfile consumes them.
+      - key: VITE_APP_NAME
+        value: Swift Bidder
+      - key: VITE_PUSHER_APP_KEY
+        sync: false
+      - key: VITE_PUSHER_APP_CLUSTER
+        value: ap1
+      - key: VITE_PUSHER_PORT
+        value: "443"
+      - key: VITE_PUSHER_SCHEME
+        value: https
+
+      # --- Mail -------------------------------------------------------------
+      # Free Render web services cannot send outbound traffic on ports 25/465/587,
+      # so SMTP simply cannot work here — OTP mail would queue and silently vanish.
+      # `log` writes messages to the service logs instead, which keeps registration
+      # from appearing to succeed while delivering nothing.
+      #
+      # The demo accounts are seeded pre-verified, so nobody needs email to sign in.
+      # To make real registration work, switch to an HTTPS-based provider (Resend,
+      # Postmark, Mailgun) rather than SMTP — port 443 is not blocked.
+      - key: MAIL_MAILER
+        value: log
+      - key: MAIL_FROM_ADDRESS
+        value: no-reply@swiftbidder.local
+      - key: MAIL_FROM_NAME
+        value: Swift Bidder

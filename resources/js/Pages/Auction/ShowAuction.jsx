@@ -132,7 +132,7 @@ export default function ShowAuction() {
                 <Button
                     variant="ghost"
                     onClick={() => window.history.back()}
-                    className="flex items-center gap-2 hover:bg-gray-800 text-gray-300"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
                 >
                     <ArrowLeft className="h-5 w-5" />
                     Back to Auctions
@@ -148,15 +148,15 @@ export default function ShowAuction() {
             </div>
 
             {/* Main Content Card */}
-            <Card className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 shadow-xl overflow-hidden">
+            <Card className="border shadow-lg overflow-hidden">
                 {/* Hero Section */}
-                <div className="relative bg-gray-700/40 p-8 border-b border-gray-700">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+                <div className="relative bg-muted/40 p-8 border-b">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-card-foreground mb-3">
                         {auction.title}
                     </h1>
                     <div className="flex items-center space-x-2 mb-4">
                         {timeRemaining && (
-                            <div className="flex items-center text-cyan-400 font-medium">
+                            <div className="flex items-center text-cyan-700 dark:text-cyan-400 font-medium">
                                 <Clock className="h-4 w-4 mr-1" />
                                 {timeRemaining}
                             </div>
@@ -168,7 +168,7 @@ export default function ShowAuction() {
                         <div className="mb-4">
                             <Button
                                 onClick={() => setIsBidModalOpen(true)}
-                                className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2 rounded-lg shadow-md"
+                                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md"
                             >
                                 Place a Bid
                             </Button>
@@ -184,8 +184,8 @@ export default function ShowAuction() {
                         user={user}
                     />
 
-                    <h3 className="flex items-center text-lg font-semibold text-white mb-4">
-                        <ImageIcon className="h-5 w-5 mr-2 text-blue-400" />
+                    <h3 className="flex items-center text-lg font-semibold text-card-foreground mb-4">
+                        <ImageIcon className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
                         Auction Images
                     </h3>
 
@@ -194,11 +194,11 @@ export default function ShowAuction() {
                             {images.map((img, index) => (
                                 <div
                                     key={img.id}
-                                    className="relative group cursor-pointer overflow-hidden rounded-lg border border-gray-700 shadow-md"
+                                    className="relative group cursor-pointer overflow-hidden rounded-lg border shadow-md"
                                     onClick={() => openImageModal(index)}
                                 >
                                     <img
-                                        src={img.image_path}
+                                        src={img.url}
                                         alt={`Auction Image ${index + 1}`}
                                         className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
                                     />
@@ -209,15 +209,15 @@ export default function ShowAuction() {
                             ))}
                         </div>
                     ) : (
-                        <div className="flex items-center gap-3 bg-gray-900 p-4 rounded-lg border border-gray-700">
-                            <AlertCircle className="h-6 w-6 text-yellow-400" />
-                            <p className="text-gray-300">
+                        <div className="flex items-center gap-3 bg-muted/40 p-4 rounded-lg border">
+                            <AlertCircle className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+                            <p className="text-muted-foreground">
                                 No images available for this auction.
                             </p>
                         </div>
                     )}
 
-                    <p className="text-gray-200 text-lg leading-relaxed mt-4">
+                    <p className="text-foreground text-lg leading-relaxed mt-4">
                         {auction.description}
                     </p>
                 </div>
@@ -225,44 +225,44 @@ export default function ShowAuction() {
                 <CardContent className="p-0">
                     {/* Key Details */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-6">
-                        <div className="bg-gray-800/60 p-4 rounded-lg border border-gray-700 flex flex-col">
-                            <span className="text-gray-400 text-sm flex items-center">
-                                <DollarSign className="h-4 w-4 mr-1 text-gray-500" />
+                        <div className="bg-muted/40 p-4 rounded-lg border flex flex-col">
+                            <span className="text-muted-foreground text-sm flex items-center">
+                                <DollarSign className="h-4 w-4 mr-1 text-muted-foreground" />
                                 Starting Price
                             </span>
-                            <p className="text-xl font-bold text-green-400 mt-1">
+                            <p className="text-xl font-bold text-green-600 dark:text-green-400 mt-1">
                                 ${formatCurrency(auction.starting_price)}
                             </p>
                         </div>
 
-                        <div className="bg-gray-800/60 p-4 rounded-lg border border-gray-700 flex flex-col">
-                            <span className="text-gray-400 text-sm flex items-center">
-                                <Award className="h-4 w-4 mr-1 text-gray-500" />
+                        <div className="bg-muted/40 p-4 rounded-lg border flex flex-col">
+                            <span className="text-muted-foreground text-sm flex items-center">
+                                <Award className="h-4 w-4 mr-1 text-muted-foreground" />
                                 Current Price
                             </span>
-                            <p className="text-xl font-bold text-blue-400 mt-1">
+                            <p className="text-xl font-bold text-blue-600 dark:text-blue-400 mt-1">
                                 ${formatCurrency(auction.current_price)}
                             </p>
                         </div>
 
-                        <div className="bg-gray-800/60 p-4 rounded-lg border border-gray-700 flex flex-col">
-                            <span className="text-gray-400 text-sm flex items-center">
-                                <CalendarDays className="h-4 w-4 mr-1 text-gray-500" />
+                        <div className="bg-muted/40 p-4 rounded-lg border flex flex-col">
+                            <span className="text-muted-foreground text-sm flex items-center">
+                                <CalendarDays className="h-4 w-4 mr-1 text-muted-foreground" />
                                 Start Time
                             </span>
-                            <p className="text-sm font-medium text-white mt-1">
+                            <p className="text-sm font-medium text-foreground mt-1">
                                 {moment(auction.start_time).format(
                                     "MMM D, YYYY h:mm A"
                                 )}
                             </p>
                         </div>
 
-                        <div className="bg-gray-800/60 p-4 rounded-lg border border-gray-700 flex flex-col">
-                            <span className="text-gray-400 text-sm flex items-center">
-                                <CalendarDays className="h-4 w-4 mr-1 text-gray-500" />
+                        <div className="bg-muted/40 p-4 rounded-lg border flex flex-col">
+                            <span className="text-muted-foreground text-sm flex items-center">
+                                <CalendarDays className="h-4 w-4 mr-1 text-muted-foreground" />
                                 End Time
                             </span>
-                            <p className="text-sm font-medium text-white mt-1">
+                            <p className="text-sm font-medium text-foreground mt-1">
                                 {moment(auction.end_time).format(
                                     "MMM D, YYYY h:mm A"
                                 )}
@@ -271,15 +271,15 @@ export default function ShowAuction() {
                     </div>
 
                     <div className="px-6 pb-6">
-                        <h3 className="flex items-center text-lg font-semibold text-white mb-4">
-                            <Award className="h-5 w-5 mr-2 text-blue-400" />
+                        <h3 className="flex items-center text-lg font-semibold text-card-foreground mb-4">
+                            <Award className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
                             Recent Bids
                         </h3>
 
                         {bids.length === 0 ? (
-                            <div className="flex items-center gap-3 bg-gray-900 p-4 rounded-lg border border-gray-700">
-                                <AlertCircle className="h-6 w-6 text-yellow-400" />
-                                <p className="text-gray-300">
+                            <div className="flex items-center gap-3 bg-muted/40 p-4 rounded-lg border">
+                                <AlertCircle className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+                                <p className="text-muted-foreground">
                                     No bids yet. Be the first to bid.
                                 </p>
                             </div>
@@ -293,24 +293,24 @@ export default function ShowAuction() {
                                             key={bid.id}
                                             className={`flex items-center justify-between rounded-lg border px-4 py-3 ${
                                                 isWinner
-                                                    ? "bg-blue-900/30 border-blue-500"
-                                                    : "bg-gray-800/60 border-gray-700"
+                                                    ? "bg-blue-50 border-blue-400 dark:bg-blue-900/30 dark:border-blue-500"
+                                                    : "bg-muted/40"
                                             }`}
                                         >
                                             <div className="flex items-center gap-3">
                                                 {isWinner && (
-                                                    <Award className="h-5 w-5 text-yellow-300" />
+                                                    <Award className="h-5 w-5 text-yellow-600 dark:text-yellow-300" />
                                                 )}
                                                 <div>
-                                                    <p className="text-white font-medium">
+                                                    <p className="text-foreground font-medium">
                                                         {bid.bidder_name}
                                                         {isMine && (
-                                                            <span className="ml-2 text-xs text-blue-300">
+                                                            <span className="ml-2 text-xs text-blue-600 dark:text-blue-300">
                                                                 (you)
                                                             </span>
                                                         )}
                                                     </p>
-                                                    <p className="text-xs text-gray-400">
+                                                    <p className="text-xs text-muted-foreground">
                                                         {moment(bid.created_at).fromNow()}
                                                     </p>
                                                 </div>
@@ -318,8 +318,8 @@ export default function ShowAuction() {
                                             <p
                                                 className={`text-lg font-bold ${
                                                     isWinner
-                                                        ? "text-blue-300"
-                                                        : "text-gray-200"
+                                                        ? "text-blue-700 dark:text-blue-300"
+                                                        : "text-foreground"
                                                 }`}
                                             >
                                                 ${formatCurrency(bid.bid_amount)}
@@ -358,7 +358,7 @@ export default function ShowAuction() {
 
                         <div className="w-full h-full flex items-center justify-center overflow-hidden">
                             <img
-                                src={images[currentImageIndex].image_path}
+                                src={images[currentImageIndex].url}
                                 alt={`Auction Image ${currentImageIndex + 1}`}
                                 className="max-w-full max-h-[80vh] object-contain transition-transform duration-300"
                                 style={{
@@ -394,7 +394,7 @@ export default function ShowAuction() {
                                     }}
                                 >
                                     <img
-                                        src={img.image_path}
+                                        src={img.url}
                                         alt={`Thumbnail ${index + 1}`}
                                         className="w-full h-full object-cover rounded"
                                     />

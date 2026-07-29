@@ -35,7 +35,7 @@ class UserController extends Controller
         $attachSelectedImage = function ($auction) {
             $auction->selected_image = $auction->images->isEmpty()
                 ? null
-                : $auction->images->random()->image_path;
+                : $auction->images->random()->url;
 
             return $auction;
         };

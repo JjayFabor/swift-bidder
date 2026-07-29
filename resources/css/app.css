@@ -2,22 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-
-
 @layer base {
   :root {
-        --background: 0 0% 100%;
+        --background: 210 40% 98%;
         --foreground: 222.2 84% 4.9%;
         --card: 0 0% 100%;
         --card-foreground: 222.2 84% 4.9%;
@@ -42,21 +29,21 @@
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
-        --sidebar-background: 0 0% 98%;
-        --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 240 5.9% 10%;
+        --sidebar-background: 0 0% 100%;
+        --sidebar-foreground: 222.2 47.4% 11.2%;
+        --sidebar-primary: 222.2 47.4% 11.2%;
         --sidebar-primary-foreground: 0 0% 98%;
-        --sidebar-accent: 240 4.8% 95.9%;
-        --sidebar-accent-foreground: 240 5.9% 10%;
-        --sidebar-border: 220 13% 91%;
+        --sidebar-accent: 210 40% 96.1%;
+        --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+        --sidebar-border: 214.3 31.8% 91.4%;
         --sidebar-ring: 217.2 91.2% 59.8%;
     }
   .dark {
-        --background: 222.2 84% 4.9%;
+        --background: 221 39% 7%;
         --foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
+        --card: 221 39% 11%;
         --card-foreground: 210 40% 98%;
-        --popover: 222.2 84% 4.9%;
+        --popover: 221 39% 11%;
         --popover-foreground: 210 40% 98%;
         --primary: 210 40% 98%;
         --primary-foreground: 222.2 47.4% 11.2%;
@@ -76,18 +63,16 @@
         --chart-3: 30 80% 55%;
         --chart-4: 280 65% 60%;
         --chart-5: 340 75% 55%;
-        --sidebar-background: 240 5.9% 10%;
-        --sidebar-foreground: 240 4.8% 95.9%;
+        --sidebar-background: 221 39% 9%;
+        --sidebar-foreground: 210 40% 98%;
         --sidebar-primary: 224.3 76.3% 48%;
         --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 240 3.7% 15.9%;
-        --sidebar-accent-foreground: 240 4.8% 95.9%;
-        --sidebar-border: 240 3.7% 15.9%;
+        --sidebar-accent: 217.2 32.6% 17.5%;
+        --sidebar-accent-foreground: 210 40% 98%;
+        --sidebar-border: 217.2 32.6% 17.5%;
         --sidebar-ring: 217.2 91.2% 59.8%;
     }
 }
-
-
 
 @layer base {
     * {
@@ -101,14 +86,13 @@
         scrollbar-width: none;
     }
 
+    body {
+        @apply bg-background text-foreground;
+    }
+
     html::-webkit-scrollbar,
     body::-webkit-scrollbar {
         display: none;
-    }
-
-    /* Dark mode styles */
-    .dark body {
-        @apply bg-gray-900 text-gray-100;
     }
 
     .hide-scrollbar {
@@ -120,4 +104,3 @@
     }
 
   }
-

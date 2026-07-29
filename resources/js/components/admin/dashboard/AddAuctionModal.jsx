@@ -101,7 +101,7 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                         placeholder="Enter auction title"
                         required
                     />
-                    {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
+                    {errors.title && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.title}</p>}
                 </FormItem>
                 <FormItem>
                     <label htmlFor="description" className="block text-sm font-medium">
@@ -115,7 +115,7 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                         onChange={(e) => setData('description', e.target.value)}
                         placeholder="Enter auction description"
                     />
-                    {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+                    {errors.description && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.description}</p>}
                 </FormItem>
                 <FormItem>
                     <label htmlFor="images" className="block text-sm font-medium">
@@ -127,14 +127,14 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                             name="images"
                             type="file"
                             multiple
-                            className="file:mr-4 file:px-4 file:rounded-lg file:border file:border-gray-300 file:bg-gray-800 file:text-white file:hover:bg-gray-700"
+                            className="file:mr-4 file:px-4 file:rounded-lg file:border file:border-input file:bg-secondary file:text-secondary-foreground file:hover:bg-accent"
                             onChange={(e) => {
                                 const files = Array.from(e.target.files);
                                 setData('images', files);
                             }}
                         />
                     </div>
-                    {errors.images && <p className="text-red-500 text-sm mt-1">{errors.images}</p>}
+                    {errors.images && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.images}</p>}
                 </FormItem>
                 <FormItem>
                     <label htmlFor="starting_price" className="block text-sm font-medium">
@@ -153,7 +153,7 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                         }}
                         placeholder="Enter auction starting price"
                     />
-                    {errors.starting_price && <p className="text-red-500 text-sm mt-1">{errors.starting_price}</p>}
+                    {errors.starting_price && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.starting_price}</p>}
                 </FormItem>
                 <div className="flex gap-4">
                     <FormItem className="w-1/2">
@@ -167,7 +167,7 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                                 document.activeElement?.blur();
                             }}
                         />
-                        {errors.start_time && <p className="text-red-500 text-sm mt-1">{errors.start_time}</p>}
+                        {errors.start_time && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.start_time}</p>}
                     </FormItem>
 
                     <FormItem className="w-1/2">
@@ -181,7 +181,7 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                                 document.activeElement?.blur();
                             }}
                         />
-                        {errors.end_time && <p className="text-red-500 text-sm mt-1">{errors.end_time}</p>}
+                        {errors.end_time && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.end_time}</p>}
                     </FormItem>
                 </div>
                 <FormItem>
@@ -202,14 +202,14 @@ export default function AddAuctionModal ({ title, isOpen, onClose, auctions}) {
                             <SelectItem value="cancelled">Cancelled</SelectItem>
                         </SelectContent>
                     </Select>
-                    {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status}</p>}
+                    {errors.status && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{errors.status}</p>}
                 </FormItem>
                 <DialogFooter>
                     <Button variant="outline" onClick={onClose}>
                         Cancel
                     </Button>
                     <Button
-                        className="bg-blue-600 text-white hover:bg-blue-900"
+                        className="bg-blue-600 text-white hover:bg-blue-700"
                         onClick={submit}
                         disabled={processing}
                     >

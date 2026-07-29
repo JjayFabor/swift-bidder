@@ -23,44 +23,44 @@ export default function Register() {
     };
 
     return (
-        <div className="w-full max-w-md bg-[#273747] p-6 rounded-lg shadow-lg text-white">
+        <div className="w-full max-w-md bg-card text-card-foreground border p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-center">Register</h2>
-            <p className="text-gray-400 text-center text-sm">Create your account</p>
+            <p className="text-muted-foreground text-center text-sm">Create your account</p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                 {/* Name Field */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-300">Name</label>
+                    <label className="block text-sm font-medium">Name</label>
                     <Input
                         type="text"
                         value={data.name}
                         onChange={(e) => setData("name", e.target.value)}
-                        className="bg-gray-700 text-white border-gray-600 focus:ring-blue-500"
+                        className="focus:ring-blue-500"
                     />
                     {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
 
                 {/* Email Field */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-300">Email</label>
+                    <label className="block text-sm font-medium">Email</label>
                     <Input
                         type="email"
                         value={data.email}
                         onChange={(e) => setData("email", e.target.value)}
-                        className="bg-gray-700 text-white border-gray-600 focus:ring-blue-500"
+                        className="focus:ring-blue-500"
                     />
                     {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 {/* Password Field */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-300">Password</label>
+                    <label className="block text-sm font-medium">Password</label>
                     <div className="relative">
                         <Input
                             type={showPassword ? "text" : "password"}
                             value={data.password}
                             onChange={(e) => setData("password", e.target.value)}
-                            className="bg-gray-700 text-white border-gray-600 focus:ring-blue-500"
+                            className="focus:ring-blue-500"
                         />
                         <button
                             type="button"
@@ -68,9 +68,9 @@ export default function Register() {
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? (
-                                <EyeOff className="h-5 w-5 text-gray-400" />
+                                <EyeOff className="h-5 w-5 text-muted-foreground" />
                             ) : (
-                                <Eye className="h-5 w-5 text-gray-400" />
+                                <Eye className="h-5 w-5 text-muted-foreground" />
                             )}
                         </button>
                     </div>
@@ -79,13 +79,13 @@ export default function Register() {
 
                 {/* Confirm Password Field */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-300">Confirm Password</label>
+                    <label className="block text-sm font-medium">Confirm Password</label>
                     <div className="relative">
                         <Input
                             type={showConfirmPassword ? "text" : "password"}
                             value={data.password_confirmation}
                             onChange={(e) => setData("password_confirmation", e.target.value)}
-                            className="bg-gray-700 text-white border-gray-600 focus:ring-blue-500"
+                            className="focus:ring-blue-500"
                         />
                         <button
                             type="button"
@@ -93,9 +93,9 @@ export default function Register() {
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         >
                             {showConfirmPassword ? (
-                                <EyeOff className="h-5 w-5 text-gray-400" />
+                                <EyeOff className="h-5 w-5 text-muted-foreground" />
                             ) : (
-                                <Eye className="h-5 w-5 text-gray-400" />
+                                <Eye className="h-5 w-5 text-muted-foreground" />
                             )}
                         </button>
                     </div>

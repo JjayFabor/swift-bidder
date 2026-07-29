@@ -41,11 +41,9 @@ class AuctionController extends Controller
         $auction = $this->auctionService->getAuctionById($id);
         $auction_images = AuctionImage::where('auction_id', $id)->get();
 
-        $auction_images->transform(function ($image) {
-            $image->image_path = asset('storage/'.$image->image_path);
-
-            return $image;
-        });
+        // URLs come from the `url` accessor on AuctionImage, so they follow whichever
+        // disk is configured (local in development, R2/S3 in production) instead of
+        // being hardcoded to the public storage path here.
 
         $recentBids = $auction->bids()
             ->with('user:id,name')

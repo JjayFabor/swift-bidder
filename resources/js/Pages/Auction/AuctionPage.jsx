@@ -78,8 +78,8 @@ export default function AuctionPage({
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Placeholder for recommended items */}
-                    <div className="bg-gray-800/50 rounded-lg border border-gray-700 p-8 text-center">
-                        <p className="text-gray-400">
+                    <div className="bg-muted/40 rounded-lg border p-8 text-center">
+                        <p className="text-muted-foreground">
                             Personalized recommendations coming soon
                         </p>
                     </div>

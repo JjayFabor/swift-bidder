@@ -16,6 +16,13 @@ import DeleteAuctionDialog from "@/components/admin/dashboard/DeleteAuctionDialo
 import EditAuctionModal from "@/components/admin/dashboard/EditAuctionModal";
 import PaginationControls from "@/components/admin/dashboard/PaginationControls";
 
+const STATUS_STYLES = {
+    active: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+    pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+    closed: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
+    cancelled: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
+};
+
 export default function AuctionTable ({ dataAuctions, onDelete, links }) {
 
     const [deleteAuctionId, setDeleteAuctionId] = useState(null);
@@ -50,32 +57,32 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
     };
 
     return (
-        <div className="overflow-x-auto rounded-lg border border-gray-700">
+        <div className="overflow-x-auto rounded-lg border">
             <Table className="w-full">
-                <TableHeader className="bg-gray-800">
-                    <TableRow className="hover:bg-gray-800/50">
-                        <TableHead className="text-gray-300 font-medium">
+                <TableHeader className="bg-muted/50">
+                    <TableRow>
+                        <TableHead className="text-muted-foreground font-medium">
                             Title
                         </TableHead>
-                        <TableHead className="text-gray-300 font-medium">
+                        <TableHead className="text-muted-foreground font-medium">
                             Description
                         </TableHead>
-                        <TableHead className="text-gray-300 font-medium text-right">
+                        <TableHead className="text-muted-foreground font-medium text-right">
                             Starting Price
                         </TableHead>
-                        <TableHead className="text-gray-300 font-medium text-right">
+                        <TableHead className="text-muted-foreground font-medium text-right">
                             Current Price
                         </TableHead>
-                        <TableHead className="text-gray-300 font-medium">
+                        <TableHead className="text-muted-foreground font-medium">
                             Start Date
                         </TableHead>
-                        <TableHead className="text-gray-300 font-medium">
+                        <TableHead className="text-muted-foreground font-medium">
                             End Date
                         </TableHead>
-                        <TableHead className="text-gray-300 font-medium">
+                        <TableHead className="text-muted-foreground font-medium">
                             Status
                         </TableHead>
-                        <TableHead className="text-gray-300 font-medium text-center">
+                        <TableHead className="text-muted-foreground font-medium text-center">
                             Action
                         </TableHead>
                     </TableRow>
@@ -84,7 +91,7 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                     {dataAuctions.map((auction) => (
                         <TableRow
                             key={auction.id}
-                            className="border-b border-gray-700 hover:bg-gray-800/50"
+                            className="border-b hover:bg-muted/50"
                         >
                             <TableCell className="font-medium">
                                 {auction.title}
@@ -125,13 +132,7 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                             <TableCell>
                                 {(() => {
                                     const status = auction.effective_status ?? auction.status;
-                                    const cls = status === "active"
-                                        ? "bg-green-900 text-green-300"
-                                        : status === "pending"
-                                        ? "bg-yellow-900 text-yellow-300"
-                                        : status === "closed"
-                                        ? "bg-blue-900 text-blue-300"
-                                        : "bg-red-900 text-red-300";
+                                    const cls = STATUS_STYLES[status] ?? STATUS_STYLES.cancelled;
                                     return (
                                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${cls}`}>
                                             {status}
@@ -144,18 +145,18 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                                     onClick={() => showAuction(auction.id)}
                                     size="sm"
                                     variant="ghost"
-                                    className="group hover:bg-blue-900 hover:text-blue-300"
+                                    className="group text-blue-600 hover:bg-blue-600 hover:text-white dark:text-blue-400 dark:hover:bg-blue-700"
                                 >
-                                    <ExternalLink className="h-4 w-4 mr-1 text-blue-500 group-hover:text-white transition-colors" />
+                                    <ExternalLink className="h-4 w-4 mr-1 transition-colors" />
                                     View
                                 </Button>
                                 <Button
                                     onClick={() => setEditAuctionId(auction.id)}
                                     size="sm"
                                     variant="ghost"
-                                    className="group hover:bg-blue-900 hover:text-blue-300"
+                                    className="group text-blue-600 hover:bg-blue-600 hover:text-white dark:text-blue-400 dark:hover:bg-blue-700"
                                 >
-                                    <Pencil className="h-4 w-4 mr-1 text-blue-500 group-hover:text-white transition-colors" />
+                                    <Pencil className="h-4 w-4 mr-1 transition-colors" />
                                     Edit
                                 </Button>
                                 <Button
@@ -164,9 +165,9 @@ export default function AuctionTable ({ dataAuctions, onDelete, links }) {
                                     }
                                     size="sm"
                                     variant="ghost"
-                                    className="group hover:bg-red-900 hover:text-white-300"
+                                    className="group text-red-600 hover:bg-red-600 hover:text-white dark:text-red-400 dark:hover:bg-red-700"
                                 >
-                                    <Trash className="h-4 w-4 mr-1 text-red-500 group-hover:text-white transition-colors" />
+                                    <Trash className="h-4 w-4 mr-1 transition-colors" />
                                     Delete
                                 </Button>
                             </TableCell>

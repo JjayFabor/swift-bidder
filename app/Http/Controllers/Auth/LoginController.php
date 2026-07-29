@@ -11,7 +11,18 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Auth/Login', [
+            // Only exposed while demo mode is on, and never includes anything the
+            // seeder did not already create as a throwaway account.
+            'demoAccounts' => config('demo.enabled')
+                ? collect(config('demo.accounts'))->map(fn (array $account) => [
+                    'label' => $account['label'],
+                    'description' => $account['description'],
+                    'email' => $account['email'],
+                    'password' => $account['password'],
+                ])->values()
+                : null,
+        ]);
     }
 
     public function login(Request $request)

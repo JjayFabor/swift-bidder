@@ -64,7 +64,7 @@ export default function BidModal({ isOpen, onClose, auction, setAuction, setBids
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="bg-gray-800 border border-gray-700 text-white">
+            <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-xl font-bold">
                         Place Your Bid
@@ -74,21 +74,21 @@ export default function BidModal({ isOpen, onClose, auction, setAuction, setBids
                 <div className="space-y-4 py-3">
                     <div className="flex justify-between items-center">
                         <div>
-                            <p className="text-gray-400 text-sm">Current Price</p>
-                            <p className="text-lg font-bold text-blue-400">
+                            <p className="text-muted-foreground text-sm">Current Price</p>
+                            <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
                                 ${formatCurrency(auction.current_price)}
                             </p>
                         </div>
                         <div>
-                            <p className="text-gray-400 text-sm">Minimum Bid</p>
-                            <p className="text-lg font-bold text-green-400">
+                            <p className="text-muted-foreground text-sm">Minimum Bid</p>
+                            <p className="text-lg font-bold text-green-600 dark:text-green-400">
                                 ${formatCurrency(parseFloat(auction.current_price) + 1)}
                             </p>
                         </div>
                     </div>
 
                     <div>
-                        <Label htmlFor="bidAmount" className="text-white">Your Bid Amount ($)</Label>
+                        <Label htmlFor="bidAmount">Your Bid Amount ($)</Label>
                         <Input
                             id="bidAmount"
                             ref={bidInputRef}
@@ -101,21 +101,21 @@ export default function BidModal({ isOpen, onClose, auction, setAuction, setBids
                                 setData("bid_amount", value === "" ? "" : parseFloat(value));
                                 setBidError("");
                             }}
-                            className="bg-gray-700 border-gray-600 text-white mt-1"
+                            className="mt-1"
                             placeholder="Enter bid amount"
                             autoFocus
                         />
-                        {bidError && <p className="text-red-400 text-sm mt-1">{bidError}</p>}
+                        {bidError && <p className="text-red-600 dark:text-red-400 text-sm mt-1">{bidError}</p>}
                     </div>
                 </div>
 
                 <DialogFooter>
-                    <Button onClick={onClose} className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                    <Button onClick={onClose} variant="outline">
                         Cancel
                     </Button>
                     <Button
                         onClick={handleBidSubmit}
-                        className="bg-blue-600 hover:bg-blue-500 text-white"
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
                         disabled={processing}
                     >
                         {processing ? "Submitting..." : "Submit Bid"}

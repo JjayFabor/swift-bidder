@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320" role="img" aria-label="No image available">
+  <style>
+    .bg { fill: #e2e8f0; }
+    .fg { stroke: #94a3b8; }
+    /* Cards sit on a dark surface in dark mode, so a light block would glare. */
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1e293b; }
+      .fg { stroke: #475569; }
+    }
+  </style>
+  <rect class="bg" width="480" height="320"/>
+  <g class="fg" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="168" y="104" width="144" height="112" rx="10"/>
+    <circle cx="204" cy="140" r="12"/>
+    <path d="M172 198l44-40 30 26 26-22 32 30"/>
+  </g>
+</svg>
