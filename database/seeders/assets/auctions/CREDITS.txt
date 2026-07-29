@@ -1,0 +1,10 @@
+Demo auction imagery from The Metropolitan Museum of Art Open Access collection.
+All objects are flagged isPublicDomain=true (CC0), so no attribution is required;
+sources are recorded here for provenance.
+https://www.metmuseum.org/about-the-met/policies-and-documents/open-access
+
+coin-cabinet/ (4 images) | Met object 195473 | Coin cabinet | ca. 1809–19 | public domain (isPublicDomain=true)
+astronomical-watch/ (4 images) | Met object 194191 | Clock watch with astronomical dial and sundial | ca. 1605–10 | public domain (isPublicDomain=true)
+italian-viola/ (4 images) | Met object 624385 | Viola | ca. 1660 | public domain (isPublicDomain=true)
+mythological-vessel/ (4 images) | Met object 310364 | Vessel with mythological scene | 600–800 CE | public domain (isPublicDomain=true)
+flemish-triptych/ (4 images) | Met object 437261 | The Penitence of Saint Jerome | ca. 1515 | public domain (isPublicDomain=true)
